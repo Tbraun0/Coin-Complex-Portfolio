@@ -1,0 +1,3 @@
+rootProject.name = 'CoinComplex'
+
+include ':app'
