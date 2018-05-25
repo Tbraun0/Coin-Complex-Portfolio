@@ -4,6 +4,7 @@ ADDED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:1:1-26:12
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:1:1-26:12
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:1:1-26:12
+MERGED from [:react-native-svg] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-svg/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/9d438dad788c9e5a775720ac7b8ff225/AndroidManifest.xml:2:1-15:12
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/2dd62872c8327361d410314e3cbc9b4c/AndroidManifest.xml:17:1-24:12
 MERGED from [com.android.support:support-v4:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/support-v4-23.0.1.aar/4f4ae6838f923d76f79d9d6da60af99f/AndroidManifest.xml:17:1-24:12
@@ -93,6 +94,8 @@ uses-sdk
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-svg] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-svg/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-svg] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-svg/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/9d438dad788c9e5a775720ac7b8ff225/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/9d438dad788c9e5a775720ac7b8ff225/AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/2dd62872c8327361d410314e3cbc9b4c/AndroidManifest.xml:20:5-43

@@ -1,3 +1,9 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
-AppRegistry.registerComponent('CoinComplex', () => App);
+import LoginNav from './LoginNavigator';
+import watchlist from './reducers/watchlist';
+import {createStore} from 'redux';
+let store = createStore(watchlist);
+
+store.subscribe(AppRegistry.registerComponent);
+
+AppRegistry.registerComponent('CoinComplex', () => <LoginNav store={store}/>);
