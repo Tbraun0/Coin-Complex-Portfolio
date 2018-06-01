@@ -4,9 +4,10 @@ import UserInputSearch from './UserInputSearch.js';
 import searchIMG from '../images/search.png';
 import { addElement, removeElement } from '../actions/watchlist.js';
 import addButtonIMG from '../images/addbutton.png';
+
 const items = ['Apples', 'Pie', 'Juice', 'Cake', 'Nuggets', 'EOS', 'BTC', 'ETH', 'XRP'];
 
-export default class NewsPage extends React.Component {
+export default class ExplorePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -77,6 +78,9 @@ const styles = StyleSheet.create({
   	paddingRight: 12,
   },
   listRow: {
+    backgroundColor: '#0c0c0c',
+    borderBottomWidth: 1,
+    borderBottomColor: '#282b2d',
   	width:'100%',
   	display:'flex',
   	justifyContent: 'space-between',
@@ -87,10 +91,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 12,
     fontFamily: 'avenirlight',
-    fontSize: 18,
     color: '#e9ebeb',
-    backgroundColor: '#0c0c0c',
-    borderBottomWidth: 1,
-    borderBottomColor: '#282b2d',
+    fontSize: 18,
   },
 });

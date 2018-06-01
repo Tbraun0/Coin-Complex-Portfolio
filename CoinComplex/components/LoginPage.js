@@ -29,7 +29,7 @@ export default class LoginPage extends React.Component {
   render() {
     return (
       <View styles={styles.outer}>
-        <SvgUri style={styles.logotop} width="150" height="150" source={require('../images/logo.svg')}/>
+        <SvgUri width="150" height="150" source={require('../images/logo.svg')}  style={{marginBottom: 15, marginLeft: 'auto', marginRight:'auto'}}/>
         <UserInput
           source={usernameIMG}
           placeholder="Username"
@@ -46,7 +46,7 @@ export default class LoginPage extends React.Component {
           autoCorrect={false}
         />
         <LoginButton title="Login"
-                color="rgba(0,0,0,0)"
+                color="#30a1ad"
                 TextColor="#e9ebeb"
                 style={styles.loginButtonStyle}
                 onPress={this.props.handleLogin}
@@ -57,11 +57,6 @@ export default class LoginPage extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  logotop: {
-    marginBottom: 15,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
   outer: {
   },
   loginButtonStyle: {

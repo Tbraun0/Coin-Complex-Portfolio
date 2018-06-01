@@ -4,100 +4,119 @@ import NavBarButton from './NavBarButton.js';
 import Portfolio from './Portfolio.js';
 import WatchList from './WatchList.js';
 import GraphsPage from './GraphsPage.js';
-import NewsPage from './NewsPage.js';
+import ExplorePage from './ExplorePage.js';
+import Settings from './Settings.js';
+import Notifications from './Notifications.js';
+import News from './News.js';
+import Account from './Account.js';
 
 export default class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      portfolioShow: true,
-      watchListShow: false,
-      graphsShow: false,
-      newsShow: false,
+      currentlySelected: this.props.currentlySelected,
     };
   }
-  newsClick = () => {
-    if (this.state.newsShow != true) {
-      this.setState({portfolioShow: false, watchListShow: false, graphsShow: false, newsShow: true});
-    }
+  componentWillReceiveProps(nextprops) {
+  	this.setState({currentlySelected: nextprops.currentlySelected});
   }
-
-  graphsClick = () => {
-    if (this.state.graphsShow != true) {
-      this.setState({portfolioShow: false, watchListShow: false, graphsShow: true, newsShow: false});
-    }
-  }
-
-  WatchListClick = () => {
-    if (this.state.watchListShow != true) {
-      this.setState({portfolioShow: false, watchListShow: true, graphsShow: false, newsShow: false});
-    }
-  }
-
-  PortfolioClick = () => {
-    if (this.state.portfolioShow != true) {
-      this.setState({portfolioShow: true, watchListShow: false, graphsShow: false, newsShow: false});
-    }
-  };
-
   render() {
 
     var PortfolioButtonColor;
     var WatchListButtonColor;
     var GraphsButtonColor;
-    var NewsButtonColor;
+    var ExploreButtonColor;
 
     var PortfolioButtonText;
     var WatchListButtonText;
     var GraphsButtonText;
-    var NewsButtonColor;
+    var ExploreButtonColor;
 
-    if (this.state.portfolioShow) {
-      PortfolioButtonColor = '#30a1ad';
-      PortfolioButtonText = '#0c0c0c';
-    }
-    else {
-      PortfolioButtonColor = 'rgba(0,0,0,0)';
-      PortfolioButtonText = '#30a1ad';
-    }
-    if (this.state.watchListShow) {
-      WatchListButtonColor = '#30a1ad';
-      WatchListButtonText = '#0c0c0c';
-    }
-    else {
-      WatchListButtonColor = 'rgba(0,0,0,0)';
-      WatchListButtonText = '#30a1ad';
-    }
-    if (this.state.graphsShow) {
-      GraphsButtonColor = '#30a1ad';
-      GraphsButtonText = '#0c0c0c';
-    }
-    else {
-      GraphsButtonColor = 'rgba(0,0,0,0)';
-      GraphsButtonText = '#30a1ad';
-    }
-    if (this.state.newsShow) {
-      NewsButtonColor = '#30a1ad';
-      NewsButtonText = '#0c0c0c';
-    }
-    else {
-      NewsButtonColor = 'rgba(0,0,0,0)';
-      NewsButtonText = '#30a1ad';
+    var ButtonSelected;
+    //This is really ugly but I don't want to rewrite the button components atm
+    switch(this.state.currentlySelected) {
+      default: 
+        PortfolioButtonColor = 'rgba(0,0,0,0)';
+        PortfolioButtonText = '#30a1ad';   
+        WatchListButtonColor = 'rgba(0,0,0,0)';
+        WatchListButtonText = '#30a1ad';    
+        GraphsButtonColor = 'rgba(0,0,0,0)';
+        GraphsButtonText = '#30a1ad'; 
+        ExploreButtonColor = 'rgba(0,0,0,0)';
+        ExploreButtonText = '#30a1ad';
+        break;
+      case 'Portfolio':
+        PortfolioButtonColor = '#30a1ad';
+        PortfolioButtonText = '#0c0c0c';       
+        WatchListButtonColor = 'rgba(0,0,0,0)';
+        WatchListButtonText = '#30a1ad';    
+        GraphsButtonColor = 'rgba(0,0,0,0)';
+        GraphsButtonText = '#30a1ad'; 
+        ExploreButtonColor = 'rgba(0,0,0,0)';
+        ExploreButtonText = '#30a1ad';
+        break;
+      case 'WatchList':
+        WatchListButtonColor = '#30a1ad';
+        WatchListButtonText = '#0c0c0c';  
+        PortfolioButtonColor = 'rgba(0,0,0,0)';
+        PortfolioButtonText = '#30a1ad';     
+        GraphsButtonColor = 'rgba(0,0,0,0)';
+        GraphsButtonText = '#30a1ad'; 
+        ExploreButtonColor = 'rgba(0,0,0,0)';
+        ExploreButtonText = '#30a1ad';
+        break;
+      case 'Graph':
+        GraphsButtonColor = '#30a1ad';
+        GraphsButtonText = '#0c0c0c';
+        PortfolioButtonColor = 'rgba(0,0,0,0)';
+        PortfolioButtonText = '#30a1ad';
+        WatchListButtonColor = 'rgba(0,0,0,0)';
+        WatchListButtonText = '#30a1ad';
+        ExploreButtonColor = 'rgba(0,0,0,0)';
+        ExploreButtonText = '#30a1ad';
+        break;
+      case 'Explore':
+        ExploreButtonColor = '#30a1ad';
+        ExploreButtonText = '#0c0c0c';
+        PortfolioButtonColor = 'rgba(0,0,0,0)';
+        PortfolioButtonText = '#30a1ad';
+        WatchListButtonColor = 'rgba(0,0,0,0)';
+        WatchListButtonText = '#30a1ad';
+        GraphsButtonColor = 'rgba(0,0,0,0)';
+        GraphsButtonText = '#30a1ad';
+        break;
     }
 
+    var MainPageContent;
 
-    var MainPageContent = <Text>.</Text>;
-    if (this.state.portfolioShow) {
-      MainPageContent = <Portfolio/>
-    }
-    if (this.state.watchListShow) {
-      MainPageContent = <WatchList/>
-    }
-    if (this.state.graphsShow) {
-      MainPageContent = <GraphsPage/>
-    }
-    if (this.state.newsShow) {
-      MainPageContent = <NewsPage/>
+    switch(this.state.currentlySelected) {
+      default:
+        MainPageContent = <Text>Da fuck is going on</Text>
+        break;
+      case 'Portfolio':
+        MainPageContent = <Portfolio />
+        break;
+      case 'WatchList':
+        MainPageContent = <WatchList/>
+        break;
+      case 'Graph':
+        MainPageContent = <GraphsPage/>
+        break;
+      case 'Explore':
+        MainPageContent = <ExplorePage/>
+        break;
+      case 'Notifications':
+        MainPageContent = <Notifications/>
+        break;
+      case 'Account':
+        MainPageContent = <Account/>
+        break;
+      case 'Settings':
+        MainPageContent = <Settings/>
+        break;
+      case 'News':
+        MainPageContent = <News/>
+        break;
     }
 
     return (
@@ -107,28 +126,28 @@ export default class MainPage extends React.Component {
             color={PortfolioButtonColor}
             TextColor={PortfolioButtonText}
             style={styles.NavButtonStyle}
-            onPress={this.PortfolioClick}
+            onPress={() => this.props.switchSelect('Portfolio')}
             leftBorder='false'
             rightBorder='true'/>
           <NavBarButton title="Watchlist"
             color={WatchListButtonColor}
             TextColor={WatchListButtonText}
             style={styles.NavButtonStyle}
-            onPress={this.WatchListClick}
+            onPress={() => this.props.switchSelect('WatchList')}
             leftBorder='false'
             rightBorder='true'/>
           <NavBarButton title="Graphs"
             color={GraphsButtonColor}
             TextColor={GraphsButtonText}
             style={styles.NavButtonStyle}
-            onPress={this.graphsClick}
+            onPress={() => this.props.switchSelect('Graph')}
             leftBorder='false'
             rightBorder='true'/>
           <NavBarButton title="Explore"
-            color={NewsButtonColor}
-            TextColor={NewsButtonText}
+            color={ExploreButtonColor}
+            TextColor={ExploreButtonText}
             style={styles.NavButtonStyle}
-            onPress={this.newsClick}
+            onPress={() => this.props.switchSelect('Explore')}
             leftBorder='false'
             rightBorder='false'/>
         </View>
@@ -142,7 +161,6 @@ const styles = StyleSheet.create({
   MainPage: {
     width:'100%',
     height:'100%',
-    backgroundColor: '#0c0c0c',
   },
   NavButtonStyle: {
     fontFamily: 'avenirlight',

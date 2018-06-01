@@ -1,15 +1,18 @@
 import React from 'react';
+import watchlist from './reducers/watchlist';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from './components/Button.js';
 import App from './App.js';
 import LoginPage from './components/LoginPage.js';
+import {createStore} from 'redux';
+
 
 export default class LoginNavigator extends React.Component {
   constructor() {
     super();
     this.state = {
       loggedIn: false,
-      store: this.props.store,
+      store: createStore(watchlist),
     }
   }
 
@@ -25,13 +28,13 @@ export default class LoginNavigator extends React.Component {
 
     if (this.state.loggedIn) {
       MainAppContent = <App
-        store={this.store}
+        store={this.state.store}
         handleLogout={this.handleLogout}
         />;
     }
     else {
       MainAppContent = <LoginPage
-        store={this.store}
+        store={this.state.store}
         style={styles.LoginOuter}
         handleLogin={this.handleLogin}
         />
