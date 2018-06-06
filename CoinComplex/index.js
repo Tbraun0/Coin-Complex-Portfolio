@@ -1,5 +1,5 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
-import LoginNav from './LoginNavigator';
+import reduxStarter from './reduxStarter';
 
-AppRegistry.registerComponent('CoinComplex', () => LoginNav);
+AppRegistry.registerComponent('CoinComplex', () => reduxStarter);

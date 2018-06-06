@@ -1,5 +1,4 @@
 import React from 'react';
-import watchlist from './reducers/watchlist';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from './components/Button.js';
 import App from './App.js';
@@ -12,7 +11,6 @@ export default class LoginNavigator extends React.Component {
     super();
     this.state = {
       loggedIn: false,
-      store: createStore(watchlist),
     }
   }
 
@@ -28,13 +26,11 @@ export default class LoginNavigator extends React.Component {
 
     if (this.state.loggedIn) {
       MainAppContent = <App
-        store={this.state.store}
         handleLogout={this.handleLogout}
         />;
     }
     else {
       MainAppContent = <LoginPage
-        store={this.state.store}
         style={styles.LoginOuter}
         handleLogin={this.handleLogin}
         />

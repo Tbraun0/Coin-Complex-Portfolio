@@ -3,13 +3,19 @@
 Redux Actions for List Updates
 ******************************************************/
 
-export const ADD_ELEMENT = 'ADD_ELEMENT'
-export const REMOVE_ELEMENT = 'REMOVE_ELEMENT'
+import * as actions from './actionTypes';
 
 export const addElement = (n) => {
-	return { type: ADD_ELEMENT, name: n }
+	console.log(n);
+	return { type: actions.ADD, 
+			watchListItem: {
+				name: n,
+		} 
+	};
 }
 
 export const removeElement = (n) => {
-	return { type: REMOVE_ELEMENT, name: n }
+	return { type: actions.REMOVE, 
+				name: n 
+			};
 }

@@ -71,7 +71,6 @@ export default class App extends React.Component {
   render() {
     var appContent;
 
-    console.log(this.state.menuOpened);
     this.toggleBackgroundColor();
     return (
       <View style={styles.outer}>
@@ -103,7 +102,7 @@ const styles = StyleSheet.create({
   sideBar: {
     width:250,
     height:'100%',
-    backgroundColor: 'rgb(22,22,22)',
+    backgroundColor: 'rgb(12,12,12)',
     zIndex: 2,
   },
   outer: {

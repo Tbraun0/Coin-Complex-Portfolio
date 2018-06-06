@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, ScrollView, Text, Image, View } from 'react-native'
+import { StyleSheet, SafeAreaView, ScrollView, Text, Image, View, TouchableOpacity } from 'react-native'
 import UserInputSearch from './UserInputSearch.js';
 import searchIMG from '../images/search.png';
-import { addElement, removeElement } from '../actions/watchlist.js';
+import { addElement, removeElement } from '../actions/watchlistActions.js';
 import addButtonIMG from '../images/addbutton.png';
 
+import store from '../store';
 const items = ['Apples', 'Pie', 'Juice', 'Cake', 'Nuggets', 'EOS', 'BTC', 'ETH', 'XRP'];
 
 export default class ExplorePage extends React.Component {
@@ -27,11 +28,11 @@ export default class ExplorePage extends React.Component {
 	}
 
   handleAddElement = (n) => {
-    this.store.dispatch(addElement(n));
+    store.dispatch(addElement(n));
   }
 
   handleRemoveElement = (n) => {
-    this.store.dispatch(removeElement(n));
+    store.dispatch(removeElement(n));
   }
 
   render() {
@@ -53,7 +54,9 @@ export default class ExplorePage extends React.Component {
 		              <Text style={styles.listItem}>
 		                {a}
 		              </Text>
-		              <Image source={addButtonIMG} style={styles.inlineImg}/>
+                  <TouchableOpacity onPress={() => this.handleAddElement({name: a})}>
+		                <Image source={addButtonIMG} style={styles.inlineImg}/>
+                  </TouchableOpacity>
 		            </View>
 	            ))}
 
@@ -74,10 +77,10 @@ const styles = StyleSheet.create({
   inlineImg: {
   	width:30,
   	height:30,
-  	paddingTop: 15,
-  	paddingRight: 12,
+  	marginRight: 15,
   },
   listRow: {
+    paddingVertical: 12,
     backgroundColor: '#0c0c0c',
     borderBottomWidth: 1,
     borderBottomColor: '#282b2d',
@@ -88,8 +91,7 @@ const styles = StyleSheet.create({
   	alignItems:'center',
   },
   listItem: {
-    paddingHorizontal: 15,
-    paddingVertical: 12,
+    marginLeft: 15,
     fontFamily: 'avenirlight',
     color: '#e9ebeb',
     fontSize: 18,

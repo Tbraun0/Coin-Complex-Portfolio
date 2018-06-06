@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import NavBarButton from './NavBarButton.js';
 import Portfolio from './Portfolio.js';
-import WatchList from './WatchList.js';
+import WatchList from './WatchListPage.js';
 import GraphsPage from './GraphsPage.js';
 import ExplorePage from './ExplorePage.js';
 import Settings from './Settings.js';
@@ -159,8 +159,9 @@ export default class MainPage extends React.Component {
 
 const styles = StyleSheet.create({
   MainPage: {
-    width:'100%',
-    height:'100%',
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#0c0c0c',
   },
   NavButtonStyle: {
     fontFamily: 'avenirlight',
