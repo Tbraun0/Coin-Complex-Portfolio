@@ -1,39 +1,57 @@
 import React from 'react';
-import { addElement, removeElement } from '../actions/watchlistActions.js';
+import { addElement, removeElement } from '../../actions/watchlistActions.js';
 import {
   TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
+  Image,
   Component,
   View,
   Text,
   FlatList,
 } from 'react-native';
+import {dispatch} from 'redux';
+import { connect } from 'react-redux'
 import {List,ListItem} from 'react-native-elements';
+import removeButtonIMG from '../../images/removebutton.png';
+import WatchListRow from './WatchListRow';
 
-import store from '../store.js';
-var dataSource =  [{name: 'BTC'}, {name: 'ETH'}, {name: 'LTC'}];
-export default class WatchList extends React.Component {
+import store from '../../store.js';
+
+
+class WatchList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dataSource: store.getState().watchlist.list,
+      refreshing: false,
       }
     };
 
   renderRow = (listItem) => {
     return ( 
-      <View style={styles.row}>
-        <Text style={styles.text}> {listItem.item.name} </Text>
-      </View>
+      <WatchListRow listItem={listItem} />
     )
   }
+/*
+  componentWillRecieveProps(nextProps) {
+    this.setState({dataSource: store.getState().watchlist.list});
+  }
+*/
 
   handleAddElement = (n) => {
-    this.store.dispatch(addElement(n));
+    store.dispatch(addElement(n));
   }
 
   handleRemoveElement = (n) => {
-    this.store.dispatch(removeElement(n));
+    store.dispatch(removeElement(n));
+  }
+
+  dataRefresh = () => {
+    this.setState({refreshing: true});
+    promise1.then(() => {
+      this.setState({refreshing: false});
+    });
   }
 
   render() {
@@ -41,12 +59,28 @@ export default class WatchList extends React.Component {
       <View style={styles.WatchListPage}>
         <FlatList
           data={this.state.dataSource}
+          refreshing={this.state.refreshing}
+          onRefresh={() => this.dataRefresh()}
           renderItem={(item) => this.renderRow(item)}
           keyExtractor={item => item.name}/>
       </View>
     );
   }
 }
+function mapStateToProps(state) {
+  return {
+    dataSource: state.dataSource,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    handleAddElement: (n) => dispatch(addElement(n)),
+    handleRemoveElement: (n) => dispatch(removeElement(n)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WatchList)
 
 const styles = StyleSheet.create({
   WatchListPage: {
@@ -70,6 +104,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems:'center',
+  },
+  inlineImg: {
+    width:30,
+    height:30,
+    marginRight: 15,
   },
   text: {
     fontFamily: 'avenirlight',

@@ -5,8 +5,12 @@
       <module fileurl="file://$PROJECT_DIR$/CoinComplex.iml" filepath="$PROJECT_DIR$/CoinComplex.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-blur/android/react-native-blur.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-blur/android/react-native-blur.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-blur/android/react-native-blur.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-blur/android/react-native-blur.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-interactable/lib/android/react-native-interactable.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-interactable/lib/android/react-native-interactable.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-interactable/lib/android/react-native-interactable.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-interactable/lib/android/react-native-interactable.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-svg/android/react-native-svg.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-svg/android/react-native-svg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-svg/android/react-native-svg.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-svg/android/react-native-svg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" />
       <module fileurl="file://$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" filepath="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android/react-native-vector-icons.iml" />
     </modules>
   </component>

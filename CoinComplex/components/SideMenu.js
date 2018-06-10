@@ -39,7 +39,7 @@ export default class Menu extends React.Component {
                       </TouchableOpacity>
                       <View style={styles.separationBar}></View>
                       <TouchableOpacity style={ styles.menuNews } onPress={() => this.props.switchSelect('News')}>
-                            <Icon name='news' color={'#e9ebeb'} size={24} />
+                            <Icon name='book' color={'#e9ebeb'} size={24} />
                             <Text style={styles.menuText} type='h5White'>News</Text>
                       </TouchableOpacity>
                       <View style={styles.separationBar}></View> 

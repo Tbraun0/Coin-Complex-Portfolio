@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as watchListActions from '../actions/watchlistActions';
+import * as watchListActions from '../../actions/watchlistActions';
 import WatchList from './WatchList.js';
 
 //redux store
-import store from '../store.js';
+import store from '../../store.js';
 store.dispatch(watchListActions.addElement({name: 'BTC'}));
 //store.dispatch(addElement('ETH'));
 
@@ -24,7 +24,6 @@ export default class WatchListPage extends React.Component {
   }
 
   render() {
-    console.log(store.getState());
     return (
       <View style={styles.WatchListPage}>
         <WatchList listItems={store.getState()} style={styles.listStyle}/>
