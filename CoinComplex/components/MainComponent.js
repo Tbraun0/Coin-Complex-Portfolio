@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View , Animated, Dimensions, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View , Image, Animated, Dimensions, TouchableOpacity} from 'react-native';
 import SvgUri from 'react-native-svg-uri';
 import Account from './Account.js';
 import Interactable from 'react-native-interactable';
@@ -28,7 +28,7 @@ export default class MainComponent extends React.Component {
           <View style={styles.topbar}>
             <SvgUri width="45" height="45" style={{marginLeft: 10}} source={require('../images/logo.svg')}/>
             <TouchableOpacity style={ styles.menuAccount } onPress={this.props.onMenuPress}>
-              <Icon name='bars' color={'#e9ebeb'} size={35} />
+              <Image source={require('../images/hamburger.png')} style={styles.hamburgerStyle} />
             </TouchableOpacity>
           </View>
           <MainPage currentlySelected={this.props.currentlySelected} switchSelect={(selection) => this.props.switchSelect(selection)}/>
@@ -47,6 +47,10 @@ const styles = StyleSheet.create({
     top:0,
     bottom:0,
     backgroundColor: '#0c0c0c',
+  },
+  hamburgerStyle: {
+    width: 35,
+    height:35,
   },
   accountButtonStyle: {
     fontFamily: 'avenirlight',

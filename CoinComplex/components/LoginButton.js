@@ -148,6 +148,7 @@ class LoginButton extends React.Component<{
         testID={testID}
         disabled={disabled}
         onPress={onPress}
+        underlayColor='rgba(0,0,0,0)'
         onHideUnderlay={this._onHideUnderlay.bind(this)}
         onShowUnderlay={this._onShowUnderlay.bind(this)}
         >

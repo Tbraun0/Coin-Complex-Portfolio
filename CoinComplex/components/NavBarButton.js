@@ -7,6 +7,7 @@
  * @format
  * @flow
  */
+ import {Image} from 'react-native';
 
 'use strict';
 
@@ -53,13 +54,11 @@ const invariant = require('fbjs/lib/invariant');
 class NavBarButton extends React.Component<{
   title: string,
   onPress: () => any,
-  color?: ?string,
+  currentlySelected?: ?string,
   hasTVPreferredFocus?: ?boolean,
   accessibilityLabel?: ?string,
   disabled?: ?boolean,
   testID?: ?string,
-  leftBorder?: ?string,
-  rightBorder?: ?string,
 }> {
   static propTypes = {
     /**
@@ -73,9 +72,7 @@ class NavBarButton extends React.Component<{
     /**
      * Color of the text (iOS), or background color of the button (Android)
      */
-    color: ColorPropType,
 
-    TextColor: ColorPropType,
     /**
      * If true, disable all interactions for this component.
      */
@@ -93,9 +90,7 @@ class NavBarButton extends React.Component<{
      */
     testID: PropTypes.string,
 
-    leftBorder: PropTypes.string,
-
-    rightBorder: PropTypes.string,
+    currentlySelected: PropTypes.string,
   };
     constructor(props) {
       super(props);
@@ -110,41 +105,16 @@ class NavBarButton extends React.Component<{
   render() {
     const {
       accessibilityLabel,
-      color,
-      TextColor,
       onPress,
       title,
       hasTVPreferredFocus,
       disabled,
       testID,
-      leftBorder,
-      rightBorder,
+      currentlySelected,
     } = this.props;
     const buttonStyles = [styles.button];
     const textStyles = [styles.text];
     const buttonPressStyles = [styles.buttonPress];
-
-    if (color) {
-      if (Platform.OS === 'ios') {
-        textStyles.push({color: color});
-      } else {
-        buttonStyles.push({backgroundColor: color});
-        textStyles.push({color: TextColor})
-      }
-    }
-
-    if (leftBorder == 'true') {
-      buttonStyles.push({borderLeftWidth: 1});
-      buttonStyles.push({borderLeftColor: '#30a1ad'});
-      buttonPressStyles.push({borderLeftWidth: 1});
-      buttonPressStyles.push({borderLeftColor: '#30a1ad'});
-    }
-    if (rightBorder == 'true') {
-      buttonStyles.push({borderRightWidth: 1});
-      buttonStyles.push({borderRightColor: '#30a1ad'});
-      buttonPressStyles.push({borderRightWidth: 1});
-      buttonPressStyles.push({borderRightColor: '#30a1ad'});
-    }
 
     const accessibilityTraits = ['button'];
     if (disabled) {
@@ -156,6 +126,12 @@ class NavBarButton extends React.Component<{
       typeof title === 'string',
       'The title prop of a Button must be a string',
     );
+
+    var componentOpacity;
+    var componentTopBorder;
+    (this.props.currentlySelected == this.props.title) ? componentOpacity = 1 : componentOpacity = 0.7;
+    (this.props.currentlySelected == this.props.title) ? componentTopBorder = '#30a1ad' : componentTopBorder = 'rgba(0,0,0,0)';
+
     const formattedTitle =
       Platform.OS === 'android' ? title : title;
     const Touchable =
@@ -169,12 +145,13 @@ class NavBarButton extends React.Component<{
         testID={testID}
         disabled={disabled}
         onPress={onPress}
-        style={styles.HighlightButton}
+        style={{opacity: componentOpacity, flexDirection: 'row',justifyContent: 'space-between', borderTopWidth: 1,borderTopColor:componentTopBorder, borderBottomWidth: 1,borderBottomColor:componentTopBorder, paddingTop: 10}}
         onHideUnderlay={this._onHideUnderlay.bind(this)}
         onShowUnderlay={this._onShowUnderlay.bind(this)}
         >
-        <View style={this.state.pressStatus ? styles.buttonPress : buttonStyles }>
-          <Text style={this.state.pressStatus ? styles.textPress : textStyles } disabled={disabled}>
+        <View style={styles.buttonFlex}>
+          <Image source={this.props.image} style={styles.ImageStyle}/>
+          <Text style={ styles.text } disabled={disabled}>
             {formattedTitle}
           </Text>
         </View>
@@ -190,6 +167,16 @@ const styles = StyleSheet.create({
       width:'25%',
     },
   }), 
+  buttonFlex: {
+    height:'100%',
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  ImageStyle: {
+    width:20,
+    height:20,
+  },
   button: Platform.select({
     ios: {},
     android: {
@@ -208,20 +195,20 @@ const styles = StyleSheet.create({
   text: Platform.select({
     ios: {
       // iOS blue from https://developer.apple.com/ios/human-interface-guidelines/visual-design/color/
-      color: '#e9ebeb',
+      color: '#30a1ad',
       textAlign: 'center',
       fontFamily: 'avenirlight',
       padding: 8,
       letterSpacing:2,
-      fontSize: 14,
+      fontSize: 12,
       display:'flex',
       alignItems: 'center',
     },
     android: {
-      color: '#e9ebeb',
+      color: '#30a1ad',
       textAlign: 'center',
       padding: 8,
-      fontSize:14,
+      fontSize:12,
       fontFamily: 'avenirlight',
       letterSpacing:2,
       display:'flex',
@@ -237,19 +224,19 @@ const styles = StyleSheet.create({
   }),
   textPress: Platform.select({
     ios: {
-      color: '#0c0c0c',
+      color: '#30a1ad',
       fontFamily: 'avenirlight',
       textAlign: 'center',
       padding: 8,
       letterSpacing:2,
-      fontSize: 14,
+      fontSize: 12,
     },
     android: {
-      color:'#0c0c0c',
+      color:'#30a1ad',
       fontFamily: 'avenirlight',
       padding: 8,
       textAlign: 'center',
-      fontSize:14,
+      fontSize:12,
       letterSpacing:2,
     },
   }),

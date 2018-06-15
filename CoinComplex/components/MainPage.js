@@ -10,6 +10,13 @@ import Notifications from './Notifications.js';
 import News from './News.js';
 import Account from './Account.js';
 
+
+//Nav bar Images
+import ExploreIMG from '../images/explore.png';
+import GraphIMG from '../images/graphs.png';
+import PortfolioIMG from '../images/portfolio.png';
+import WatchlistIMG from '../images/watchlist.png';
+
 export default class MainPage extends React.Component {
   constructor(props) {
     super(props);
@@ -22,68 +29,43 @@ export default class MainPage extends React.Component {
   }
   render() {
 
-    var PortfolioButtonColor;
-    var WatchListButtonColor;
-    var GraphsButtonColor;
-    var ExploreButtonColor;
-
-    var PortfolioButtonText;
-    var WatchListButtonText;
-    var GraphsButtonText;
-    var ExploreButtonColor;
+    var PortfolioButtonUnderLine;
+    var WatchListButtonUnderLine;
+    var GraphsButtonUnderLine;
+    var ExploreButtonUnderLine;
 
     var ButtonSelected;
     //This is really ugly but I don't want to rewrite the button components atm
     switch(this.state.currentlySelected) {
       default: 
-        PortfolioButtonColor = 'rgba(0,0,0,0)';
-        PortfolioButtonText = '#30a1ad';   
-        WatchListButtonColor = 'rgba(0,0,0,0)';
-        WatchListButtonText = '#30a1ad';    
-        GraphsButtonColor = 'rgba(0,0,0,0)';
-        GraphsButtonText = '#30a1ad'; 
-        ExploreButtonColor = 'rgba(0,0,0,0)';
-        ExploreButtonText = '#30a1ad';
+        PortfolioButtonUnderLine = 'rgba(0,0,0,0)';
+        WatchListButtonUnderLine = 'rgba(0,0,0,0)';
+        GraphsButtonUnderLine = 'rgba(0,0,0,0)';
+        ExploreButtonUnderLine = 'rgba(0,0,0,0)';
         break;
       case 'Portfolio':
-        PortfolioButtonColor = '#30a1ad';
-        PortfolioButtonText = '#0c0c0c';       
-        WatchListButtonColor = 'rgba(0,0,0,0)';
-        WatchListButtonText = '#30a1ad';    
-        GraphsButtonColor = 'rgba(0,0,0,0)';
-        GraphsButtonText = '#30a1ad'; 
-        ExploreButtonColor = 'rgba(0,0,0,0)';
-        ExploreButtonText = '#30a1ad';
+        PortfolioButtonUnderLine = '#30a1ad';
+        WatchListButtonUnderLine = 'rgba(0,0,0,0)';
+        GraphsButtonUnderLine = 'rgba(0,0,0,0)';
+        ExploreButtonUnderLine = 'rgba(0,0,0,0)';
         break;
-      case 'WatchList':
-        WatchListButtonColor = '#30a1ad';
-        WatchListButtonText = '#0c0c0c';  
-        PortfolioButtonColor = 'rgba(0,0,0,0)';
-        PortfolioButtonText = '#30a1ad';     
-        GraphsButtonColor = 'rgba(0,0,0,0)';
-        GraphsButtonText = '#30a1ad'; 
-        ExploreButtonColor = 'rgba(0,0,0,0)';
-        ExploreButtonText = '#30a1ad';
+      case 'Watchlist':
+        PortfolioButtonUnderLine = 'rgba(0,0,0,0)';
+        WatchListButtonUnderLine = '#30a1ad';
+        GraphsButtonUnderLine = 'rgba(0,0,0,0)';
+        ExploreButtonUnderLine = 'rgba(0,0,0,0)';
         break;
-      case 'Graph':
-        GraphsButtonColor = '#30a1ad';
-        GraphsButtonText = '#0c0c0c';
-        PortfolioButtonColor = 'rgba(0,0,0,0)';
-        PortfolioButtonText = '#30a1ad';
-        WatchListButtonColor = 'rgba(0,0,0,0)';
-        WatchListButtonText = '#30a1ad';
-        ExploreButtonColor = 'rgba(0,0,0,0)';
-        ExploreButtonText = '#30a1ad';
+      case 'Graphs':
+        PortfolioButtonUnderLine = 'rgba(0,0,0,0)';
+        WatchListButtonUnderLine = 'rgba(0,0,0,0)';
+        GraphsButtonUnderLine = '#30a1ad';
+        ExploreButtonUnderLine = 'rgba(0,0,0,0)';
         break;
       case 'Explore':
-        ExploreButtonColor = '#30a1ad';
-        ExploreButtonText = '#0c0c0c';
-        PortfolioButtonColor = 'rgba(0,0,0,0)';
-        PortfolioButtonText = '#30a1ad';
-        WatchListButtonColor = 'rgba(0,0,0,0)';
-        WatchListButtonText = '#30a1ad';
-        GraphsButtonColor = 'rgba(0,0,0,0)';
-        GraphsButtonText = '#30a1ad';
+        PortfolioButtonUnderLine = 'rgba(0,0,0,0)';
+        WatchListButtonUnderLine = 'rgba(0,0,0,0)';
+        GraphsButtonUnderLine = 'rgba(0,0,0,0)';
+        ExploreButtonUnderLine = '#30a1ad';
         break;
     }
 
@@ -96,10 +78,10 @@ export default class MainPage extends React.Component {
       case 'Portfolio':
         MainPageContent = <Portfolio />
         break;
-      case 'WatchList':
+      case 'Watchlist':
         MainPageContent = <WatchList/>
         break;
-      case 'Graph':
+      case 'Graphs':
         MainPageContent = <GraphsPage/>
         break;
       case 'Explore':
@@ -109,7 +91,7 @@ export default class MainPage extends React.Component {
         MainPageContent = <Notifications/>
         break;
       case 'Account':
-        MainPageContent = <Account/>
+        MainPageContent = <Account handleLogout={this.props.handleLogout}/>
         break;
       case 'Settings':
         MainPageContent = <Settings/>
@@ -121,37 +103,29 @@ export default class MainPage extends React.Component {
 
     return (
       <View style={styles.MainPage}>
+          {MainPageContent}
         <View style={styles.NavBar}>
           <NavBarButton title="Portfolio"
-            color={PortfolioButtonColor}
-            TextColor={PortfolioButtonText}
             style={styles.NavButtonStyle}
-            onPress={() => this.props.switchSelect('Portfolio')}
-            leftBorder='false'
-            rightBorder='true'/>
+            image={PortfolioIMG}
+            currentlySelected={this.state.currentlySelected}
+            onPress={() => this.props.switchSelect('Portfolio')}/>
           <NavBarButton title="Watchlist"
-            color={WatchListButtonColor}
-            TextColor={WatchListButtonText}
             style={styles.NavButtonStyle}
-            onPress={() => this.props.switchSelect('WatchList')}
-            leftBorder='false'
-            rightBorder='true'/>
+            image={WatchlistIMG}
+            currentlySelected={this.state.currentlySelected}
+            onPress={() => this.props.switchSelect('Watchlist')}/>
           <NavBarButton title="Graphs"
-            color={GraphsButtonColor}
-            TextColor={GraphsButtonText}
             style={styles.NavButtonStyle}
-            onPress={() => this.props.switchSelect('Graph')}
-            leftBorder='false'
-            rightBorder='true'/>
+            image={GraphIMG}
+            currentlySelected={this.state.currentlySelected}
+            onPress={() => this.props.switchSelect('Graphs')}/>
           <NavBarButton title="Explore"
-            color={ExploreButtonColor}
-            TextColor={ExploreButtonText}
+            image={ExploreIMG}
             style={styles.NavButtonStyle}
-            onPress={() => this.props.switchSelect('Explore')}
-            leftBorder='false'
-            rightBorder='false'/>
+            currentlySelected={this.state.currentlySelected}
+            onPress={() => this.props.switchSelect('Explore')}/>
         </View>
-          {MainPageContent}
       </View>
     );
   }
@@ -173,8 +147,13 @@ const styles = StyleSheet.create({
     display:'flex',
     alignItems: 'center',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderBottomColor: '#282b2d',
+    borderTopWidth: 1,
+    borderTopColor: '#282b2d',
+    bottom:0,
+    elevation: 2
   },
   text: {
     fontFamily: 'avenirlight',

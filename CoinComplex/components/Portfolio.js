@@ -10,7 +10,7 @@ export default class Portfolio extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text>
           This is the Portfolio Page!
         </Text>
@@ -21,5 +21,10 @@ export default class Portfolio extends React.Component {
 
 const styles = StyleSheet.create({
   MainPage: {
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#0c0c0c',
   },
 });

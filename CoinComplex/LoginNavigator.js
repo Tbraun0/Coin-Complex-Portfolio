@@ -47,10 +47,9 @@ export default class LoginNavigator extends React.Component {
 const styles = StyleSheet.create({
   outer: {
     flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: '#0c0c0c', 
   },
   LoginOuter: {
+    flex:1,
   },
 });

@@ -90,7 +90,7 @@ export default class App extends React.Component {
             boundaries={{left: RemainingWidth}}
             animatedValueX={this.deltaX}
             onSnap={ this.onStopInteraction }>
-              <Menu switchSelect={(selection) => this.switchSelect(selection) } currentlySelected={this.state.currentlySelected} onMenuPress={ this.onMenuPress } navigation={this.props.navigation}/>
+              <Menu switchSelect={(selection) => this.switchSelect(selection) } style={styles.sideBar} currentlySelected={this.state.currentlySelected} onMenuPress={ this.onMenuPress } handleLogout={this.props.handleLogout} navigation={this.props.navigation}/>
           </Interactable.View>
       </View>
     );

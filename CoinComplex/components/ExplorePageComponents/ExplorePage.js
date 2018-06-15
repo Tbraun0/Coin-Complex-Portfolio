@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, Image, View } from 'react-native';
 import UserInputSearch from '../UserInputSearch.js';
 import searchIMG from '../../images/search.png';
 import { addElement, removeElement } from '../../actions/watchlistActions.js';
@@ -63,17 +63,26 @@ export default class ExplorePage extends React.Component {
   }
 
   render() {
-    console.log(this.state.coins);
+    console.log(this.state.coins.length);
     return (
     	<View style={styles.container}>
-        <TextInput
-          placeholder={"Search"}
-          style={styles.sSearchBar}
-          onChangeText={searchTerm => this.setState({ searchTerm })}
-        />
+        <View style={styles.searchBarContainer}>
+          <View style={styles.searchBarContainerInner}>     
+            <Image source={require('../../images/search.png')} style={styles.searchImage}/>
+            <TextInput
+              placeholder="Search..."
+              style={styles.sSearchBar}
+              onChangeText={searchTerm => this.setState({ searchTerm })}
+              underlineColorAndroid="transparent"
+              placeholderTextColor="#e9ebeb"
+              placeholderTextOpacity={0.7}
+            />
+          </View>
+        </View>
         <SearchableFlatList
-          onRefresh={() => this.onRefresh()}
+          onRefresh={this.onRefresh}
           searchProperty={"name"}
+          searchProperty1={"symbol"}
           searchTerm={this.state.searchTerm}
           refreshing={this.state.isFetching}
           data={this.state.coins}
@@ -88,6 +97,11 @@ export default class ExplorePage extends React.Component {
 const styles = StyleSheet.create({
   MainPage: {
   },
+  searchImage: {
+    width:20,
+    height:20,
+    opacity:0.7,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -97,6 +111,25 @@ const styles = StyleSheet.create({
   	width:30,
   	height:30,
   	marginRight: 15,
+  },
+  searchBarContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#282b2d',
+    elevation: 2,
+    height:60,
+    width:'100%',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  searchBarContainerInner: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#e9ebeb',
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent: 'center',
+    height:60,
+    flex: 1,
+    padding:3,
   },
   listRow: {
     paddingVertical: 12,
@@ -115,25 +148,12 @@ const styles = StyleSheet.create({
     color: '#e9ebeb',
     fontSize: 18,
   },
-  sContainer: {
-    flex: 1,
-    backgroundColor: "#F5FCFF"
-  },
-  sTextItem: {
-    height: 50,
-    width: "100%",
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 18,
-    color: '#e9ebeb',
-  },
   sSearchBar: {
     paddingHorizontal: 10,
-    margin: 10,
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    fontSize: 18,
+    paddingBottom:6,
+    flex: 1,
+    fontSize: 16,
+    height:35,
     color: '#e9ebeb',
   },
 });

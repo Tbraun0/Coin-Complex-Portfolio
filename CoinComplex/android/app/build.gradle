@@ -95,7 +95,7 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.coincomplex"
@@ -103,6 +103,8 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        renderscriptTargetApi 23
+        renderscriptSupportModeEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

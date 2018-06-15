@@ -28,8 +28,7 @@ export default class Account extends React.Component {
 
 const styles = StyleSheet.create({
   Account: {
-    height:'100%',
-    width:'100%',
+    flex:1,
     backgroundColor: '#0c0c0c',
   },
   text: {
