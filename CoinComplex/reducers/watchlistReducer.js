@@ -22,7 +22,6 @@ function watchlistReducer (state = initialState, action={}) {
 			var newList = _.cloneDeep(state.list);
 			newList.push(action.watchListItem.name);
 			out["list"] = newList;
-			console.log(out === state);
 			return out;
 			/*
 			var newState =  Object.assign({}, state, action.watchListItem.name);
@@ -40,7 +39,6 @@ function watchlistReducer (state = initialState, action={}) {
 				}
 			}
 			out["list"] = newList;
-			console.log(out === state);
 			return out;
 	}
 };

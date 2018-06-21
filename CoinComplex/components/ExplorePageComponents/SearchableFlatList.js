@@ -6,23 +6,17 @@ export default class SearchableFlatlist extends Component {
   static INCLUDES = "includes";
   static WORDS = "words";
   getFilteredResults() {
-    let { data, type, searchProperty, searchTerm } = this.props;
+    let { data, type, searchTerm, searchProperty, searchProperty1 } = this.props;
     return data.filter(
       item =>
         type && type === SearchableFlatlist.WORDS
           ? new RegExp(`\\b${searchTerm}`, "gi").test(item[searchProperty])
-          : new RegExp(`${searchTerm}`, "gi").test(item[searchProperty])
+          : (new RegExp(`${searchTerm}`, "gi").test(item[searchProperty]) || 
+                new RegExp(`${searchTerm}`, "gi").test(item[searchProperty1]))
     );
   }
-  getFilteredresults1() {
-    let { data, type, searchProperty1, searchTerm } = this.props;
-    return data.filter(
-      item =>
-        type && type === SearchableFlatlist.WORDS
-          ? new RegExp(`\\b${searchTerm}`, "gi").test(item[searchProperty1])
-          : new RegExp(`${searchTerm}`, "gi").test(item[searchProperty1])
-    );
-  }
+
+
   render() {
     return <FlatList {...this.props} data={this.getFilteredResults()} />;
   }

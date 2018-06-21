@@ -28,7 +28,6 @@ export default class MainPage extends React.Component {
   	this.setState({currentlySelected: nextprops.currentlySelected});
   }
   render() {
-
     var PortfolioButtonUnderLine;
     var WatchListButtonUnderLine;
     var GraphsButtonUnderLine;
@@ -109,12 +108,18 @@ export default class MainPage extends React.Component {
             style={styles.NavButtonStyle}
             image={PortfolioIMG}
             currentlySelected={this.state.currentlySelected}
-            onPress={() => this.props.switchSelect('Portfolio')}/>
+            onPress={() => {this.props.switchSelect('Portfolio');
+                            this.props.changeSearchableMounted(false);
+                      }
+                    }/>
           <NavBarButton title="Watchlist"
             style={styles.NavButtonStyle}
             image={WatchlistIMG}
             currentlySelected={this.state.currentlySelected}
-            onPress={() => this.props.switchSelect('Watchlist')}/>
+            onPress={() => {this.props.switchSelect('Watchlist');
+                            this.props.changeSearchableMounted(true);
+                      }
+                    }/>
           <NavBarButton title="Graphs"
             style={styles.NavButtonStyle}
             image={GraphIMG}

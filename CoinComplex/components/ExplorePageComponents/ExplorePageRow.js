@@ -16,12 +16,17 @@ export default class ExplorePageRow extends React.Component {
       pressStatus: false,
       expanded: false,
       animation: new Animated.Value(),
+      priceIn: 'USD',
     }
   }
 
   handleRemoveElement = (n) => {
     store.dispatch(removeElement(n));
     this.setState({rendered: false});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({priceIn: nextProps.currencyPair});
   }
 
   toggleExpand = () => {
@@ -51,24 +56,34 @@ export default class ExplorePageRow extends React.Component {
     var dayChange = listItem.percent_change_24h;
     var changeColorStyle;
     var plus;
+    var price;
+    this.state.priceIn == 'USD' ? price = parseFloat(listItem.price_usd).toFixed(2) : price = parseFloat(listItem.price_btc).toFixed(6);
     parseFloat(dayChange) < 0 ? changeColorStyle='#ea1c37' : changeColorStyle='#1fe518';
     parseFloat(dayChange) < 0 ? plus='' : plus='+';
     return ( 
       <View style={styles.row} id={this.props.id}>
           <View style={styles.halfRow}>
-            <View style={styles.halfRowSplit}>
-              <Text style={styles.text}> {itemTicker} </Text>
-            </View>
-            <View style={styles.halfRowSplit}>
-              <Text style={styles.text1}> {itemName} </Text>
+            <Text style={styles.rankText}>{listItem.rank}</Text>
+            <View style={styles.halfRowFlex}>
+              <View style={styles.halfRowSplit}>
+                <Text style={styles.text}> {itemTicker} </Text>
+              </View>
+              <View style={styles.halfRowSplit}>
+                <Text style={styles.text1}> {itemName} </Text>
+              </View>
             </View>
           </View>
           <View style={styles.halfRowAlign}>
             <TouchableOpacity onPress={() => this.handleAddElement({name: itemTicker})}>
               <Image source={addButtonIMG} style={styles.inlineImg}/>
             </TouchableOpacity>
-            <View>
-            	<Text style={[styles.textChange, {color: changeColorStyle}]}>{plus}{dayChange}%</Text>
+            <View style={styles.halfRowFlex}>
+	            <View style={styles.halfRowSplitRight}>
+	            	<Text style={[styles.textChange, {color: changeColorStyle}]}>{plus}{dayChange}%</Text>
+	            </View>
+	            <View style={styles.halfRowSplitRight}>
+	            	<Text style={styles.textChange}>{this.state.priceIn == 'USD' ? '$': ''}{price}{this.state.priceIn}</Text>
+	            </View>
             </View>
           </View>
       </View>
@@ -103,9 +118,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#0c0c0c',
   },
   halfRow: {
-    paddingTop:5,
     width:'50%',
     height:60,
+    display:'flex',
+    alignItems:'center',
+    flexDirection:'row',
   },
   halfRowAlign: {
     width:'50%',
@@ -114,9 +131,20 @@ const styles = StyleSheet.create({
     alignItems:'center',
     flexDirection:'row-reverse',
   },
+  halfRowFlex: {
+  	flexDirection: 'column',
+  },	
+  halfRowSplitRight: {
+  	height:30,
+  	marginRight: 5,
+    display:'flex',
+    justifyContent:'center',
+  },
   halfRowSplit: {
     height:30,
-    width:'100%',
+    marginLeft:5,
+    display:'flex',
+    justifyContent:'center',
   },
   UserInput: {
   },
@@ -139,25 +167,33 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'avenirlight',
-    fontSize: 18,
-    marginLeft:15,
+    fontSize: 16,
+    marginLeft:5,
     letterSpacing:2,
     color:'#e9ebeb',
   },
   text1: {
     fontFamily: 'avenirlight',
-    fontSize: 16,
-    marginLeft:15,
+    fontSize: 14,
+    marginLeft:5,
     letterSpacing:2,
     opacity:0.8,
     color:'#e9ebeb',
   },
    textChange: {
     fontFamily: 'avenirlight',
-    fontSize: 16,
+    fontSize: 14,
+    textAlign: 'right',
     marginRight:5,
     letterSpacing:2,
     color:'#e9ebeb',
+  },
+  rankText: {
+    fontSize: 16,
+    color:'#e9ebeb',
+    marginLeft:15,
+    letterSpacing:2,
+    fontFamily: 'avenirlight',
   },
   inlineImg: {
     width:30,
