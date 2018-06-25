@@ -124,12 +124,18 @@ export default class MainPage extends React.Component {
             style={styles.NavButtonStyle}
             image={GraphIMG}
             currentlySelected={this.state.currentlySelected}
-            onPress={() => this.props.switchSelect('Graphs')}/>
+            onPress={() => {this.props.switchSelect('Graphs');
+                            this.props.changeSearchableMounted(false);
+                      }
+                    }/>
           <NavBarButton title="Explore"
             image={ExploreIMG}
             style={styles.NavButtonStyle}
             currentlySelected={this.state.currentlySelected}
-            onPress={() => this.props.switchSelect('Explore')}/>
+            onPress={() => {this.props.switchSelect('Explore');
+                            this.props.changeSearchableMounted(true);
+                        }
+                    }/>
         </View>
       </View>
     );

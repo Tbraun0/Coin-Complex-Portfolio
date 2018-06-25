@@ -29,22 +29,26 @@ export default class Menu extends React.Component {
                   <View style={{ paddingHorizontal: 5 }}>
                     { this._renderHeader() }
                     <View style={styles.separationBar}></View>
-                      <TouchableOpacity style={ [styles.menuAccount, {borderLeftColor: accountBorder}]} onPress={() => this.props.switchSelect('Account')}>
+                      <TouchableOpacity style={ [styles.menuAccount, {borderLeftColor: accountBorder}]} 
+                        onPress={() => this.props.switchSelect('Account')}>
                             <Icon name='user-circle' color={'#e9ebeb'} size={24} />
                             <Text style={styles.menuText} type='h5White'>Account</Text>
                       </TouchableOpacity>
                       <View style={styles.separationBar}></View>
-                      <TouchableOpacity style={ [styles.menuSettings, {borderLeftColor: settingsBorder}]} onPress={() => this.props.switchSelect('Settings')}>
+                      <TouchableOpacity style={ [styles.menuSettings, {borderLeftColor: settingsBorder}]} 
+                        onPress={() => this.props.switchSelect('Settings')}>
                             <Icon name='cog' color={'#e9ebeb'} size={24} />
                             <Text style={styles.menuText} type='h5White'>Settings</Text>
                       </TouchableOpacity>
                       <View style={styles.separationBar}></View>
-                      <TouchableOpacity style={ [styles.menuNotifications, {borderLeftColor: notificationsBorder}]} onPress={() => this.props.switchSelect('Notifications')}>
+                      <TouchableOpacity style={ [styles.menuNotifications, {borderLeftColor: notificationsBorder}]} 
+                        onPress={() => this.props.switchSelect('Notifications')}>
                             <Icon name='comments' color={'#e9ebeb'} size={24} />
                             <Text style={styles.menuText} type='h5White'>Notifications</Text>
                       </TouchableOpacity>
                       <View style={styles.separationBar}></View>
-                      <TouchableOpacity style={ [styles.menuNews, {borderLeftColor: newsBorder}]} onPress={() => this.props.switchSelect('News')}>
+                      <TouchableOpacity style={ [styles.menuNews, {borderLeftColor: newsBorder}]} 
+                        onPress={() => this.props.switchSelect('News')}>
                             <Icon name='book' color={'#e9ebeb'} size={24} />
                             <Text style={styles.menuText} type='h5White'>News</Text>
                       </TouchableOpacity>

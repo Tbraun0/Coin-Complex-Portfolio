@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-blur/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-interactable/lib/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-spinkit/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-svg/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android" />
           </set>

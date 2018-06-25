@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, Image, View, YellowBox } from 'react-native';
+import { StyleSheet, Text, TextInput, Image, View, YellowBox, ActivityIndicator } from 'react-native';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module react-native-material-dropdown']);
 import UserInputSearch from '../UserInputSearch.js';
 import searchIMG from '../../images/search.png';
@@ -11,6 +11,8 @@ import SearchableFlatList from "./SearchableFlatList.js";
 import { connect } from 'react-redux';
 import { Dropdown } from 'react-native-material-dropdown';
 import store from '../../store';
+import ExplorePageContentSwitch from './ExplorePageContentSwitch.js';
+var Spinner = require('react-native-spinkit');
 /*
 Taking API's from https://coinmarketcap.com/api/#endpoint_ticker_specific_cryptocurrency
 These API's allow you to query from a start point and set a limit. 
@@ -20,47 +22,87 @@ When the page is scrolled to the bottom, the API is called again, and the app
 loads in more currencies.
 */
 
+//ADDRESS TO SEND THE BTC TO
+//3BWUqePT5fHwUyusYAJ2fPpe3Zq7tT5anR
+//0.01717000 BTC
+//We recommend including a TX fee of at least 0.00013575 BTC for quick payment confirmation.
+
 /*
 https://dev-blog.apollodata.com/loading-data-into-react-natives-flatlist-9646fa9a199b
 Here is another reference as well
 */
 
+//https://streetsmartdev.com/migrating-react-native-listview-new-flatlist-infinite-scroll/
+//Maybe this shit will work?
+
+//https://www.prisma.io/forum/t/fetchmore-query-randomly-fetches-duplicates-items/2020
+
+
+//Cryptocompare API
+//https://medium.com/@galea/cryptocompare-api-quick-start-guide-ca4430a484d4
+
+const currencies = ["BTC", "ETH", "XRP", "LTC", "BCH", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"];
+
+const currencyOptions = [{
+    value: 'USD',
+}, {
+   value: 'BTC',
+}, {
+   value: 'EUR'
+}];
+
+const changeOptions = [{
+    value: '1H',
+}, {
+   value: '24H',
+}, {
+   value: '7D'
+}];
+
 class ExplorePage extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       responseJSON: {},
       currencyPair: 'USD',
-      changePeriod: '24h',
+      changePeriod: '24H',
       Allcoins: [],
       coins: [],
-      isFetching: false,
+      isFetching: true,
+      isFetchingMore: false,
+      fullPageDisplaying: false,
+      startingPoint: 0,
     }
   }
 
-//Might need this later
-/*
-  componentWillRecieveProps(nextProps) {
-    this.setState({searchTerm: nextProps.searchTerm});
-  }
-  */
-
   componentDidMount() { 
-    this.fetchData();
+    this.fetchNewData();
   }
 
   onRefresh = () => {
-    this.setState({ isFetching: true }, function() { this.fetchData() });
+  	console.log('onRefreshCalled');
+    this.setState({ isFetching: true}, () => this.fetchNewData());
   }
 
-  fetchData = () => {
-    var that = this;
-    axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=50&sort=rank')
-      .then((res) => {
-        that.setState({ coins: res.data, isFetching: false });
-        //that.props.dispatch(StoryActions.setStories(res.data))
-      })
+  //Load in all the data at once, it's kinda slow since you can only get one convert value at a time with the API
+  fetchNewData = () => {
+	  			console.log('FirstFetch Called');
+			    axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=25&sort=rank&convert=EUR')
+			      .then((res) => {
+			        this.setState({isFetching: false, coins:res.data, startingPoint: 25});
+			      })
+  }
+
+  fetchMoreData = () => {
+  	if (this.state.isFetchingMore) {
+		    axios.get('https://api.coinmarketcap.com/v1/ticker/?start=' + this.state.startingPoint + '&limit=25&convert=EUR')
+		      .then((res) => {
+		      	console.log('SecondFetch Called');
+		      	var newCoins = this.state.coins.concat(res.data);
+		      	var newstart = this.state.startingPoint+25;
+		        this.setState({isFetchingMore: false,coins:newCoins, startingPoint: newstart});
+		      })  		
+  	}
   }
 
   onChangeTextPair = (text) => {
@@ -68,6 +110,13 @@ class ExplorePage extends React.Component {
   }
   onChangeTextPeriod = (text) => {
     this.setState({changePeriod: text});
+  }
+
+  displayFullPageContent = () => {
+    this.setState({fullPageDisplaying:true});
+  }
+  hideFullPageContent = () => {
+    this.setState({fullPageDisplaying:false});
   }
 
   handleAddElement = (n) => {
@@ -82,49 +131,71 @@ class ExplorePage extends React.Component {
     this.setState({searchTerm: text});
   }
 
-
   render() {
-
-    console.log(this.state.currencyPair);
-    let currencyOptions = [{
-      value: 'USD',
-    }, {
-      value: 'BTC',
-    }];
-
-    let changeOptions = [{
-      value: '1H',
-    }, {
-      value: '24H',
-    }, {
-      value: '7D',
-    }];
-    return (
-    	<View style={styles.container}>
-        <View style={styles.searchBarContainer}>
-          <Dropdown
-            ref={this.currencyRef}
-            label='Currency'
-            containerStyle={{width:100, borderRadius: 2,paddingHorizontal: 5, height:50,backgroundColor:'rgba(255,255,255,0.05)'}}
-            textColor='#e9ebeb'
-            value="USD"
-            onChangeText={this.onChangeTextPair}
-            baseColor='#e9ebeb'
-            data={currencyOptions}
-          />
-        </View>
-        <SearchableFlatList
-          onRefresh={this.onRefresh}
-          searchProperty={"name"}
-          searchProperty1={"symbol"}
-          searchTerm={this.props.searchTerm}
-          refreshing={this.state.isFetching}
-          data={this.state.coins}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({item}) => (<ExplorePageRow coin={item} id={item.id} currencyPair={this.state.currencyPair}/> )}
-          />
-      </View>
-    );
+    var spinner;
+    console.log(this.state.startingPoint);
+    	if (this.state.isFetching) {
+    		return (
+	    		<View style={styles.container}>
+	    			<Spinner size={100} style={styles.spinnerStyle} isVisible={true} type={'Pulse'} color={'#30a1ad'}/>
+	    		</View>
+    		);
+    	}
+    	else {
+    		return (
+		    	<View style={styles.container}>
+		        <View style={styles.searchBarContainer}>
+		            <Dropdown
+		              ref={this.currencyRef}
+		              label='Currency'
+		              containerStyle={{width:100, borderRadius: 4,paddingHorizontal: 5}}
+		              textColor='#e9ebeb'
+		              baseColor='#e9ebeb'
+		              dropdownPosition={-4}
+		              dropdownOffset={{top:32, left:0}}
+		              value="USD"
+		              onChangeText={this.onChangeTextPair}
+		              data={currencyOptions}
+		            />
+		            <Dropdown
+		              label='ChangePeriod'
+		              containerStyle={{width:100, borderRadius: 4,paddingHorizontal: 5}}
+		              textColor='#e9ebeb'
+		              baseColor='#e9ebeb'
+		              dropdownPosition={-4}
+		              dropdownOffset={{top:32, left:0}}
+		              value="24H"
+		              onChangeText={this.onChangeTextPeriod}
+		              data={changeOptions}
+		            />
+		        </View>
+		        <SearchableFlatList
+		          searchProperty={"name"}
+		          searchProperty1={"symbol"}
+		          searchTerm={this.props.searchTerm}
+		          onEndReachedThreshold={0.5}
+		          onEndReached={() => {
+		          	if (!this.state.isFetching && !this.state.isFetchingMore) {
+		          		this.setState({isFetchingMore: true}, () => {this.fetchMoreData()})
+		          	}}}
+		          data={this.state.coins}
+		          showsVerticalScrollIndicator={true}
+		          removeClippedSubviews={true}
+		          keyExtractor={(item, index) => item.id}
+		          renderItem={({item}) => (<ExplorePageRow displayFullPageContent={this.displayFullPageContent} coin={item} id={item.id} currencyPair={this.state.currencyPair} changePeriod={this.state.changePeriod}/> )}
+		          ListFooterComponent={() => {
+		          		return (
+		                   this.state.isFetchingMore &&
+			              <View style={{ flex: 1, padding: 10 }}>
+			                <ActivityIndicator size="small" />
+			              </View>
+		          		);
+		          }}
+		          />
+		          <ExplorePageContentSwitch style={styles.topContent} isDisplayed={this.state.fullPageDisplaying} hideFullPageContent={this.hideFullPageContent}/>
+		      </View>
+	      );
+  		}
   }
 }
 
@@ -144,6 +215,10 @@ const styles = StyleSheet.create({
     height:20,
     opacity:0.7,
   },
+  spinnerStyle: {
+    position:'absolute',
+    top:100,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -154,6 +229,15 @@ const styles = StyleSheet.create({
   	height:30,
   	marginRight: 15,
   },
+  dropdownContainer: {
+    width:150,
+    height:50,
+    display:'flex',
+    backgroundColor:'blue',
+  },
+  topContent: {
+    elevation: 3,
+  },
   searchBarContainer: {
     borderBottomWidth: 1,
     borderBottomColor: '#282b2d',
@@ -161,7 +245,9 @@ const styles = StyleSheet.create({
     height:50,
     width:'100%',
     display:'flex',
-    justifyContent:'center',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'flex-end',
     paddingVertical: 10,
     paddingHorizontal: 20,
   },

@@ -4,12 +4,14 @@ ADDED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:1:1-26:12
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:1:1-26:12
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:1:1-26:12
+MERGED from [:react-native-spinkit] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-spinkit/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-16:12
 MERGED from [:react-native-blur] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-blur/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-vector-icons] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-vector-icons/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-interactable] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-interactable/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-18:12
 MERGED from [:react-native-svg] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-svg/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/9d438dad788c9e5a775720ac7b8ff225/AndroidManifest.xml:2:1-15:12
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/2dd62872c8327361d410314e3cbc9b4c/AndroidManifest.xml:17:1-24:12
+MERGED from [com.github.ybq:Android-SpinKit:1.1.0] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/Android-SpinKit-1.1.0.aar/e827da503131902dba6f71ef269c3762/AndroidManifest.xml:2:1-10:12
 MERGED from [com.android.support:support-v4:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/support-v4-23.0.1.aar/4f4ae6838f923d76f79d9d6da60af99f/AndroidManifest.xml:17:1-24:12
 MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/textlayoutbuilder-1.0.0.aar/13a0eb39c44253d050c0611bbbb0cc80/AndroidManifest.xml:10:1-18:12
 MERGED from [com.facebook.fresco:fresco:1.3.0] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/fresco-1.3.0.aar/7b1ff74e0cdf71ef4fc17eb0e8dd9855/AndroidManifest.xml:2:1-9:12
@@ -49,6 +51,8 @@ MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/
 		ADDED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:5:22-75
 application
 ADDED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:7:5-24:19
+MERGED from [:react-native-spinkit] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-spinkit/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-14:19
+MERGED from [:react-native-spinkit] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-spinkit/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-14:19
 MERGED from [:react-native-interactable] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-interactable/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:13:5-16:19
 MERGED from [:react-native-interactable] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-interactable/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:13:5-16:19
 MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/9d438dad788c9e5a775720ac7b8ff225/AndroidManifest.xml:13:5-20
@@ -61,6 +65,8 @@ MERGED from [com.facebook.soloader:soloader:0.1.0] /Users/thomasbraun/.gradle/ca
 MERGED from [com.facebook.soloader:soloader:0.1.0] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/soloader-0.1.0.aar/7388e0119c0b684048dacdf2a99ecc24/AndroidManifest.xml:3:3-17
 MERGED from [org.webkit:android-jsc:r174650] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/android-jsc-r174650.aar/3b0115e6b3d5d8474f845fe53829f82b/AndroidManifest.xml:2:3-17
 MERGED from [org.webkit:android-jsc:r174650] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/android-jsc-r174650.aar/3b0115e6b3d5d8474f845fe53829f82b/AndroidManifest.xml:2:3-17
+	android:supportsRtl
+		ADDED from [:react-native-spinkit] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-spinkit/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:13:9-35
 	android:label
 		ADDED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml:9:7-39
 	android:icon
@@ -99,6 +105,8 @@ uses-sdk
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-spinkit] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-spinkit/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-spinkit] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-spinkit/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-blur] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-blur/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-blur] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-blur/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-vector-icons] /Users/thomasbraun/Desktop/Coin-Complex-Portfolio/CoinComplex/node_modules/react-native-vector-icons/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
@@ -111,6 +119,8 @@ MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/
 MERGED from [com.facebook.react:react-native:0.55.4] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/9d438dad788c9e5a775720ac7b8ff225/AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/2dd62872c8327361d410314e3cbc9b4c/AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:appcompat-v7:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.0.1.aar/2dd62872c8327361d410314e3cbc9b4c/AndroidManifest.xml:20:5-43
+MERGED from [com.github.ybq:Android-SpinKit:1.1.0] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/Android-SpinKit-1.1.0.aar/e827da503131902dba6f71ef269c3762/AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.ybq:Android-SpinKit:1.1.0] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/Android-SpinKit-1.1.0.aar/e827da503131902dba6f71ef269c3762/AndroidManifest.xml:6:5-8:41
 MERGED from [com.android.support:support-v4:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/support-v4-23.0.1.aar/4f4ae6838f923d76f79d9d6da60af99f/AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.0.1] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/support-v4-23.0.1.aar/4f4ae6838f923d76f79d9d6da60af99f/AndroidManifest.xml:20:5-43
 MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] /Users/thomasbraun/.gradle/caches/transforms-1/files-1.1/textlayoutbuilder-1.0.0.aar/13a0eb39c44253d050c0611bbbb0cc80/AndroidManifest.xml:14:5-16:41

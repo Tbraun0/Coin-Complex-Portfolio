@@ -31,6 +31,7 @@ export default class MainComponent extends React.Component {
     
   }
 
+  //Displays or hides the searchbar at the top of the app
   changeSearchableMounted = (boolean) => {
     this.setState({searchableMounted: boolean});
   }
@@ -39,7 +40,6 @@ export default class MainComponent extends React.Component {
     return (
         <View style={styles.searchBarContainer}>
           <View style={styles.searchBarContainerInner}>     
-            <Image source={require('../images/search.png')} style={styles.searchImage}/>
             <TextInput
               placeholder="Search..."
               style={styles.sSearchBar}
@@ -144,6 +144,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom:6,
     flex: 1,
+    display:'flex',
+    alignItems:'center',
     fontSize: 16,
     height:35,
     color: '#e9ebeb',

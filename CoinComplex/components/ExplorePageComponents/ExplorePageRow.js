@@ -17,6 +17,7 @@ export default class ExplorePageRow extends React.Component {
       expanded: false,
       animation: new Animated.Value(),
       priceIn: 'USD',
+      changePeriod: '24H'
     }
   }
 
@@ -26,7 +27,7 @@ export default class ExplorePageRow extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({priceIn: nextProps.currencyPair});
+    this.setState({priceIn: nextProps.currencyPair, changePeriod: nextProps.changePeriod});
   }
 
   toggleExpand = () => {
@@ -53,13 +54,14 @@ export default class ExplorePageRow extends React.Component {
   renderRow = (listItem) => {
     var itemTicker = listItem.symbol;
     var itemName = listItem.name;
-    var dayChange = listItem.percent_change_24h;
+    var changeString = "percent_change_" + (this.state.changePeriod.toLowerCase());
+    var percentChange = parseFloat(listItem[changeString]);
     var changeColorStyle;
     var plus;
-    var price;
-    this.state.priceIn == 'USD' ? price = parseFloat(listItem.price_usd).toFixed(2) : price = parseFloat(listItem.price_btc).toFixed(6);
-    parseFloat(dayChange) < 0 ? changeColorStyle='#ea1c37' : changeColorStyle='#1fe518';
-    parseFloat(dayChange) < 0 ? plus='' : plus='+';
+    var priceIN = "price_" + (this.state.priceIn).toLowerCase();
+    var price = parseFloat(listItem[priceIN]).toFixed(2);
+    parseFloat(percentChange) < 0 ? changeColorStyle='#ea1c37' : changeColorStyle='#1fe518';
+    parseFloat(percentChange) < 0 ? plus='' : plus='+';
     return ( 
       <View style={styles.row} id={this.props.id}>
           <View style={styles.halfRow}>
@@ -79,10 +81,10 @@ export default class ExplorePageRow extends React.Component {
             </TouchableOpacity>
             <View style={styles.halfRowFlex}>
 	            <View style={styles.halfRowSplitRight}>
-	            	<Text style={[styles.textChange, {color: changeColorStyle}]}>{plus}{dayChange}%</Text>
+	            	<Text style={[styles.textChange, {color: changeColorStyle}]}>{plus}{percentChange}%</Text>
 	            </View>
 	            <View style={styles.halfRowSplitRight}>
-	            	<Text style={styles.textChange}>{this.state.priceIn == 'USD' ? '$': ''}{price}{this.state.priceIn}</Text>
+	            	<Text style={styles.textChange}>{price}{' '+this.state.priceIn}</Text>
 	            </View>
             </View>
           </View>
@@ -102,7 +104,7 @@ export default class ExplorePageRow extends React.Component {
 
   render() {
     let watchRow;
-    this.state.rendered ? watchRow = <TouchableHighlight style={styles.rowWrap} activeOpacity={.5} onPress={this.toggleExpand} underlayColor='#30a1ad'>{this.renderRow(this.props.coin)}</TouchableHighlight> : watchRow = <View></View>;
+    this.state.rendered ? watchRow = <TouchableHighlight style={styles.rowWrap} activeOpacity={.5} onPress={() => this.props.displayFullPageContent()} underlayColor='#30a1ad'>{this.renderRow(this.props.coin)}</TouchableHighlight> : watchRow = <View></View>;
     return (
       <Animated.View style={[styles.rowExpand, {height:this.state.animation}]}>
         {watchRow}
@@ -123,6 +125,13 @@ const styles = StyleSheet.create({
     display:'flex',
     alignItems:'center',
     flexDirection:'row',
+  },
+  fullPageView: {
+  	position: 'absolute',
+  	top:0,
+  	bottom:0,
+  	left:0,
+  	right:0,
   },
   halfRowAlign: {
     width:'50%',
