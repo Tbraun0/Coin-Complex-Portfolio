@@ -24,10 +24,6 @@ export default class LoginPage extends React.Component {
       ? this.setState({showPass: false, press: true})
       : this.setState({showPass: true, press: false});
   }
-  handleClick = () => {
-
-  }
-
 
   render() {
     return (
@@ -38,7 +34,7 @@ export default class LoginPage extends React.Component {
         />
         <View style={styles.loginpageFull}>
           <View style={styles.loginPageFlex}>
-            <SvgUri width="150" height="150" source={require('../images/logo.svg')}  style={{marginBottom: 15, marginLeft: 'auto', marginRight:'auto'}}/>
+            <SvgUri width="100" height="100" source={require('../images/logo.svg')}  style={{marginBottom: 20, marginLeft: 'auto', marginRight:'auto'}}/>
             <UserInput
               source={usernameIMG}
               placeholder="Username"

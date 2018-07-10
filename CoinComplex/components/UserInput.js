@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderLeftColor: '#e9ebeb',
     borderRightWidth: 1,
     borderRightColor: '#e9ebeb',
-    width: DEVICE_WIDTH - 100,
+    width: 250,
     height: 40,
     marginHorizontal: 20,
     fontFamily: 'avenirlight',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   inputWrapper: {
-    marginBottom: 15,
+    marginBottom: 20,
   },
   inlineImg: {
     position: 'absolute',

@@ -20,7 +20,7 @@ const TouchableNativeFeedback = require('TouchableNativeFeedback');
 const TouchableHighlight = require('TouchableHighlight');
 const TouchableOpacity = require('TouchableOpacity');
 const View = require('View');
-
+import Ripple from 'react-native-material-ripple';
 const invariant = require('fbjs/lib/invariant');
 /**
  * A basic button component that should render nicely on any platform. Supports
@@ -140,30 +140,22 @@ class LoginButton extends React.Component<{
     const Touchable =
       Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
     return (
-      <TouchableHighlight
-        accessibilityComponentType="button"
-        accessibilityLabel={accessibilityLabel}
-        accessibilityTraits={accessibilityTraits}
-        hasTVPreferredFocus={hasTVPreferredFocus}
-        testID={testID}
-        disabled={disabled}
+      <Ripple
+        rippleColor='#e9ebeb'
+        rippleOpacity={0.5}
         onPress={onPress}
-        underlayColor='rgba(0,0,0,0)'
-        onHideUnderlay={this._onHideUnderlay.bind(this)}
-        onShowUnderlay={this._onShowUnderlay.bind(this)}
         >
-        <View style={this.state.pressStatus ? styles.buttonPress : buttonStyles }>
-          <Text style={this.state.pressStatus ? styles.textPress : textStyles } disabled={disabled}>
+        <View style={styles.buttonPress}>
+          <Text style={styles.textPress} disabled={disabled}>
             {formattedTitle}
           </Text>
         </View>
-      </TouchableHighlight>
+      </Ripple>
     );
   }
 }
 
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+//const DEVICE_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   button: Platform.select({
@@ -173,7 +165,7 @@ const styles = StyleSheet.create({
       borderRadius: 2,
       paddingLeft: 5,
       paddingRight: 5,
-      width: DEVICE_WIDTH - 100,
+      width: 250,
     },
     android: {
       marginLeft: 'auto',
@@ -186,7 +178,7 @@ const styles = StyleSheet.create({
       paddingLeft: 5,
       paddingRight: 5,
       borderColor:'#30a1ad',
-      width: DEVICE_WIDTH - 100,
+      width: 250,
     },
   }),
   text: Platform.select({
@@ -255,7 +247,7 @@ const styles = StyleSheet.create({
       borderRadius: 2,
       paddingLeft: 5,
       paddingRight: 5,
-      width: DEVICE_WIDTH - 100,
+      width: 250,
     },
     android: {
       backgroundColor:'#30a1ad',
@@ -266,7 +258,7 @@ const styles = StyleSheet.create({
       borderRadius: 2,
       paddingLeft: 5,
       paddingRight: 5,
-      width: DEVICE_WIDTH - 100,
+      width: 250,
     },
   }),
   textDisabled: Platform.select({

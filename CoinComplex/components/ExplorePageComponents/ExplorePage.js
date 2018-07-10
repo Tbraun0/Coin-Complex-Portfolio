@@ -72,6 +72,7 @@ class ExplorePage extends React.Component {
       isFetchingMore: false,
       fullPageDisplaying: false,
       startingPoint: 0,
+      currentSelectedCoin:null,
     }
   }
 
@@ -80,13 +81,11 @@ class ExplorePage extends React.Component {
   }
 
   onRefresh = () => {
-  	console.log('onRefreshCalled');
     this.setState({ isFetching: true}, () => this.fetchNewData());
   }
 
   //Load in all the data at once, it's kinda slow since you can only get one convert value at a time with the API
   fetchNewData = () => {
-	  			console.log('FirstFetch Called');
 			    axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=25&sort=rank&convert=EUR')
 			      .then((res) => {
 			        this.setState({isFetching: false, coins:res.data, startingPoint: 25});
@@ -97,7 +96,6 @@ class ExplorePage extends React.Component {
   	if (this.state.isFetchingMore) {
 		    axios.get('https://api.coinmarketcap.com/v1/ticker/?start=' + this.state.startingPoint + '&limit=25&convert=EUR')
 		      .then((res) => {
-		      	console.log('SecondFetch Called');
 		      	var newCoins = this.state.coins.concat(res.data);
 		      	var newstart = this.state.startingPoint+25;
 		        this.setState({isFetchingMore: false,coins:newCoins, startingPoint: newstart});
@@ -112,8 +110,8 @@ class ExplorePage extends React.Component {
     this.setState({changePeriod: text});
   }
 
-  displayFullPageContent = () => {
-    this.setState({fullPageDisplaying:true});
+  displayFullPageContent = (coin) => {
+    this.setState({fullPageDisplaying:true, currentSelectedCoin: coin});
   }
   hideFullPageContent = () => {
     this.setState({fullPageDisplaying:false});
@@ -133,10 +131,9 @@ class ExplorePage extends React.Component {
 
   render() {
     var spinner;
-    console.log(this.state.startingPoint);
     	if (this.state.isFetching) {
     		return (
-	    		<View style={styles.container}>
+	    		<View style={styles.spinnerContainer}>
 	    			<Spinner size={100} style={styles.spinnerStyle} isVisible={true} type={'Pulse'} color={'#30a1ad'}/>
 	    		</View>
     		);
@@ -182,7 +179,7 @@ class ExplorePage extends React.Component {
 		          showsVerticalScrollIndicator={true}
 		          removeClippedSubviews={true}
 		          keyExtractor={(item, index) => item.id}
-		          renderItem={({item}) => (<ExplorePageRow displayFullPageContent={this.displayFullPageContent} coin={item} id={item.id} currencyPair={this.state.currencyPair} changePeriod={this.state.changePeriod}/> )}
+		          renderItem={({item}) => (<ExplorePageRow displayFullPageContent={(coin) => {this.displayFullPageContent(coin)}} coin={item} id={item.id} currencyPair={this.state.currencyPair} changePeriod={this.state.changePeriod}/> )}
 		          ListFooterComponent={() => {
 		          		return (
 		                   this.state.isFetchingMore &&
@@ -192,7 +189,7 @@ class ExplorePage extends React.Component {
 		          		);
 		          }}
 		          />
-		          <ExplorePageContentSwitch style={styles.topContent} isDisplayed={this.state.fullPageDisplaying} hideFullPageContent={this.hideFullPageContent}/>
+		          <ExplorePageContentSwitch style={styles.topContent} currentSelectedCoin={this.state.currentSelectedCoin} isDisplayed={this.state.fullPageDisplaying} hideFullPageContent={this.hideFullPageContent}/>
 		      </View>
 	      );
   		}
@@ -222,6 +219,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: '#0c0c0c',
+  },
+  spinnerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'center',
     backgroundColor: '#0c0c0c',
   },
   inlineImg: {

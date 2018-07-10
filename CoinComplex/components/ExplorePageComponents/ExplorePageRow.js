@@ -5,6 +5,7 @@ import { addElement, removeElement } from '../../actions/watchlistActions.js';
 import WatchList from '../WatchListComponents/WatchList.js';
 import { TouchableHighlight, TouchableOpacity, Image, Component} from 'react-native';
 import addButtonIMG from '../../images/addbutton.png';
+import Ripple from 'react-native-material-ripple';
 //redux store
 import store from '../../store.js';
 
@@ -104,7 +105,11 @@ export default class ExplorePageRow extends React.Component {
 
   render() {
     let watchRow;
-    this.state.rendered ? watchRow = <TouchableHighlight style={styles.rowWrap} activeOpacity={.5} onPress={() => this.props.displayFullPageContent()} underlayColor='#30a1ad'>{this.renderRow(this.props.coin)}</TouchableHighlight> : watchRow = <View></View>;
+    this.state.rendered ? watchRow = 
+    <Ripple style={styles.rowWrap}
+      onPress={() => this.props.displayFullPageContent(this.props.coin)} 
+      rippleColor='#30a1ad'>{this.renderRow(this.props.coin)}</Ripple> 
+      : watchRow = <View></View>;
     return (
       <Animated.View style={[styles.rowExpand, {height:this.state.animation}]}>
         {watchRow}
