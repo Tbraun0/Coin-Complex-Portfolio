@@ -24,9 +24,12 @@ class ExplorePageGraph extends React.Component {
     this.state = {
       currentCoin: this.props.currentCoin,
       domain: '7D',
+      isMounted: false,
       currencyPair: 'USD',
       data: [],
       isLoading: true,
+      graphMin: 0,
+      graphMax: 0,
     }
   }
 /*
@@ -37,41 +40,49 @@ class ExplorePageGraph extends React.Component {
 */
 
   componentDidMount() {
+  this.setState({isMounted: true});
 	this.getWeeklyHistoricalData();
+  }
+  componentWillUnmount() {
+    this.setState({isMounted: false});
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps recieved');
+
     if (nextProps.domain === '7D') {
-      this.setState({isLoading: true, data:[], currencyPair: nextProps.currencyPair}, () => this.getWeeklyHistoricalData(nextProps.domain));
+      this.setState({isLoading: true, data:[],currentCoin:nextProps.currentCoin, currencyPair: nextProps.currencyPair}, () => this.getWeeklyHistoricalData(nextProps.domain));
       return;
     }
     else if(nextProps.domain === '1D') {
-    this.setState({isLoading: true,  data:[],currencyPair: nextProps.currencyPair}, () => this.getDailyHistoricalData(nextProps.domain));
+    this.setState({isLoading: true,  data:[],currentCoin:nextProps.currentCoin, currencyPair: nextProps.currencyPair}, () => this.getDailyHistoricalData(nextProps.domain));
       return;
     }
     else if (nextProps.domain === '1H') {
-    	this.setState({isLoading: true,  data:[],currencyPair: nextProps.currencyPair}, () => this.getHourHistoricalData(nextProps.domain));
+    	this.setState({isLoading: true,  data:[],currentCoin:nextProps.currentCoin, currencyPair: nextProps.currencyPair}, () => this.getHourHistoricalData(nextProps.domain));
       return;
     }
     else if (nextProps.domain === '1M') {
-    	this.setState({isLoading: true,  data:[],currencyPair: nextProps.currencyPair}, () => this.getMonthlyHistoricalData(nextProps.domain));
+    	this.setState({isLoading: true,  data:[],currentCoin:nextProps.currentCoin, currencyPair: nextProps.currencyPair}, () => this.getMonthlyHistoricalData(nextProps.domain));
       return;
     }
     else if (nextProps.domain === '6M') {
-    	this.setState({isLoading: true,  data:[],currencyPair: nextProps.currencyPair}, () => this.get6MonthHistoricalData(nextProps.domain));
+    	this.setState({isLoading: true,  data:[],currentCoin:nextProps.currentCoin, currencyPair: nextProps.currencyPair}, () => this.get6MonthHistoricalData(nextProps.domain));
       return;
     }
     else if (nextProps.domain === '1Y') {
-    	this.setState({isLoading: true,  data:[],currencyPair: nextProps.currencyPair}, () => this.getYearlyHistoricalData(nextProps.domain));
+    	this.setState({isLoading: true,  data:[],currentCoin:nextProps.currentCoin, currencyPair: nextProps.currencyPair}, () => this.getYearlyHistoricalData(nextProps.domain));
       return;
     }
     else if (nextProps.domain === 'ALL') {
-    	this.setState({isLoading: true,  data:[],currencyPair: nextProps.currencyPair}, () => this.getAllHistoricalData(nextProps.domain));
+    	this.setState({isLoading: true,  data:[],currentCoin:nextProps.currentCoin, currencyPair: nextProps.currencyPair}, () => this.getAllHistoricalData(nextProps.domain));
       return;
     }
     if (nextProps.currencyPair !== '') {
-      this.setState({isLoading: true, data:[], currencyPair: nextProps.currencyPair}, () => this.switchHistoricalDataAfterStateSet(this.state.domain));
+      this.setState({isLoading: true, data:[],currentCoin:nextProps.currentCoin,  currencyPair: nextProps.currencyPair}, () => this.switchHistoricalDataAfterStateSet(this.state.domain));
+      return;
+    }
+    else {
+      this.setState({isLoading: true, data:[],currentCoin:nextProps.currentCoin}, () => this.switchHistoricalDataAfterStateSet(this.state.domain));
       return;
     }
   }
@@ -105,6 +116,10 @@ class ExplorePageGraph extends React.Component {
       }    
   }
 
+/*
+We must give a margin on the top and bottom of the graphs, for which we need to know the
+highest and lowest price point of the given data array
+*/
   getWeeklyHistoricalData = (switchTo) => {
     if(this.state.currentCoin) {
       var currCoin = this.state.currentCoin.symbol;
@@ -112,14 +127,22 @@ class ExplorePageGraph extends React.Component {
         .then((res) => {
           var resDat = res.data.Data;
           var newData = [];
+          var lowestPoint = resDat[0]['close'];
+          var highestPoint = resDat[0]['close'];
           for (var i=0;i<resDat.length;i+=1) {
+          	 if (resDat[i]['close'] < lowestPoint) { lowestPoint = resDat[i]['close'];}
+          	 if (resDat[i]['close'] > highestPoint) { highestPoint = resDat[i]['close'];}
+
+
             var newObject= {price:0, date: null};
             newObject.price = (resDat[i]['close']);
             let newDate = new Date(resDat[i]['time'] * 1000);
             newObject.date = newDate;
             newData.push(newObject);
           }
-          this.setState({data: newData, domain: switchTo, isLoading: false});
+          if (this.state.isMounted) {
+            this.setState({data: newData, domain: switchTo, isLoading: false, graphMin: lowestPoint, graphMax: highestPoint});
+          }
         }).catch(() => {
         	console.log("Error logged");
         })
@@ -133,14 +156,21 @@ class ExplorePageGraph extends React.Component {
         .then((res) => {
           var resDat = res.data.Data;
           var newData = [];
+          var lowestPoint = resDat[0]['close'];
+          var highestPoint = resDat[0]['close'];
           for (var i=0;i<resDat.length;i+=1) {
+          	 if (resDat[i]['close'] < lowestPoint) { lowestPoint = resDat[i]['close'];}
+          	 if (resDat[i]['close'] > highestPoint) { highestPoint = resDat[i]['close'];}
+
             var newObject= {price:0, date: null};
             newObject.price = (resDat[i]['close']);
             let newDate = new Date(resDat[i]['time'] * 1000);
             newObject.date = newDate;
             newData.push(newObject);
           }
-          this.setState({data: newData, domain: switchTo, isLoading: false});
+          if (this.state.isMounted) {
+            this.setState({data: newData, domain: switchTo, isLoading: false, graphMin: lowestPoint, graphMax: highestPoint});
+          }
         })  
     }  
   }
@@ -152,14 +182,21 @@ class ExplorePageGraph extends React.Component {
         .then((res) => {
           var resDat = res.data.Data;
           var newData = [];
+          var lowestPoint = resDat[0]['close'];
+          var highestPoint = resDat[0]['close'];
           for (var i=0;i<resDat.length;i+=1) {
+          	 if (resDat[i]['close'] < lowestPoint) { lowestPoint = resDat[i]['close'];}
+          	 if (resDat[i]['close'] > highestPoint) { highestPoint = resDat[i]['close'];}
+
             var newObject= {price:0, date: null};
             newObject.price = (resDat[i]['close']);
             let newDate = new Date(resDat[i]['time'] * 1000);
             newObject.date = newDate;
             newData.push(newObject);
           }
-          this.setState({data: newData, domain: switchTo, isLoading: false});
+          if (this.state.isMounted) {
+            this.setState({data: newData, domain: switchTo, isLoading: false, graphMin: lowestPoint, graphMax: highestPoint});
+          }
         })  
     }  
   }
@@ -167,18 +204,25 @@ class ExplorePageGraph extends React.Component {
   getMonthlyHistoricalData = (switchTo) => {
     if(this.state.currentCoin) {
       var currCoin = this.state.currentCoin.symbol;
-      axios.get('https://min-api.cryptocompare.com/data/histoday?fsym=' + currCoin + '&tsym=' + this.state.currencyPair + '&limit=30')
+      axios.get('https://min-api.cryptocompare.com/data/histohour?fsym=' + currCoin + '&tsym=' + this.state.currencyPair + '&limit=720')
         .then((res) => {
           var resDat = res.data.Data;
           var newData = [];
-          for (var i=0;i<resDat.length;i+=1) {
+          var lowestPoint = resDat[0]['close'];
+          var highestPoint = resDat[0]['close'];
+          for (var i=0;i<resDat.length;i+=3) {
+          	 if (resDat[i]['close'] < lowestPoint) { lowestPoint = resDat[i]['close'];}
+          	 if (resDat[i]['close'] > highestPoint) { highestPoint = resDat[i]['close'];}
+
             var newObject= {price:0, date: null};
             newObject.price = (resDat[i]['close']);
             let newDate = new Date(resDat[i]['time'] * 1000);
             newObject.date = newDate;
             newData.push(newObject);
           }
-          this.setState({data: newData, domain: switchTo, isLoading: false});
+          if (this.state.isMounted) {
+            this.setState({data: newData, domain: switchTo, isLoading: false, graphMin: lowestPoint, graphMax: highestPoint});
+          }
         })  
     }  
   }
@@ -190,14 +234,21 @@ class ExplorePageGraph extends React.Component {
         .then((res) => {
           var resDat = res.data.Data;
           var newData = [];
+          var lowestPoint = resDat[0]['close'];
+          var highestPoint = resDat[0]['close'];
           for (var i=0;i<resDat.length;i+=3) {
+          	 if (resDat[i]['close'] < lowestPoint) { lowestPoint = resDat[i]['close'];}
+          	 if (resDat[i]['close'] > highestPoint) { highestPoint = resDat[i]['close'];}
+
             var newObject= {price:0, date: null};
             newObject.price = (resDat[i]['close']);
             let newDate = new Date(resDat[i]['time'] * 1000);
             newObject.date = newDate;
             newData.push(newObject);
           }
-          this.setState({data: newData, domain: switchTo, isLoading: false});
+          if (this.state.isMounted) {
+            this.setState({data: newData, domain: switchTo, isLoading: false, graphMin: lowestPoint, graphMax: highestPoint});
+          }
         })  
     }  
   }
@@ -208,14 +259,21 @@ class ExplorePageGraph extends React.Component {
         .then((res) => {
           var resDat = res.data.Data;
           var newData = [];
+          var lowestPoint = resDat[0]['close'];
+          var highestPoint = resDat[0]['close'];
           for (var i=0;i<resDat.length;i+=4) {
+          	 if (resDat[i]['close'] < lowestPoint) { lowestPoint = resDat[i]['close'];}
+          	 if (resDat[i]['close'] > highestPoint) { highestPoint = resDat[i]['close'];}
+
             var newObject= {price:0, date: null};
             newObject.price = (resDat[i]['close']);
             let newDate = new Date(resDat[i]['time'] * 1000);
             newObject.date = newDate;
             newData.push(newObject);
           }
-          this.setState({data: newData, domain: switchTo, isLoading: false});
+          if (this.state.isMounted) {
+            this.setState({data: newData, domain: switchTo, isLoading: false, graphMin: lowestPoint, graphMax: highestPoint});
+          }
         })  
     }  
   }
@@ -226,23 +284,33 @@ class ExplorePageGraph extends React.Component {
         .then((res) => {
           var resDat = res.data.Data;
           var newData = [];
+          var lowestPoint = resDat[0]['close'];
+          var highestPoint = resDat[0]['close'];
           for (var i=0;i<resDat.length;i+=2) {
+          	 if (resDat[i]['close'] < lowestPoint) { lowestPoint = resDat[i]['close'];}
+          	 if (resDat[i]['close'] > highestPoint) { highestPoint = resDat[i]['close'];}
+
             var newObject= {price:0, date: null};
             newObject.price = (resDat[i]['close']);
             let newDate = new Date(resDat[i]['time'] * 1000);
             newObject.date = newDate;
             newData.push(newObject);
           }
-          this.setState({data: newData, domain: switchTo, isLoading: false});
+          if (this.state.isMounted) {
+            this.setState({data: newData, domain: switchTo, isLoading: false, graphMin: lowestPoint, graphMax: highestPoint});
+          }
         })  
     }  
   }
 
   render() {
-    console.log('Graph rendered');
+    var graphHeight = (this.state.graphMax - this.state.graphMin);
+    var yMin = (this.state.graphMin)-(graphHeight/5);
+    if (yMin < 0) {yMin = 0;}
+    var yMax = (this.state.graphMax)+(graphHeight/5);
     if (!this.state.isLoading) {
       return (
-        <View style={{flex:1}}>
+        <View style={{height:300, width:'100%'}}>
             <View style={{padding:20, height:300, flexDirection:'row'}}>
               <View style={{flex:1, marginRight: 10}}>
                 <AreaChart
@@ -251,6 +319,8 @@ class ExplorePageGraph extends React.Component {
                   yAccessor={ ({item}) => item.price }
                   xAccessor={ ({item}) => item.date }
                   xScale={ scale.scaleTime}
+                  yMin={yMin}
+                  yMax={yMax}
                   svg={{ fill: '#295b61',stroke: '#30a1ad' }}
                   contentInset={verticalContentInset}>
                   <Grid svg={{stroke:'rgba(255,255,255,0.2)'}}/>
@@ -282,6 +352,8 @@ class ExplorePageGraph extends React.Component {
                   fill: '#e9ebeb',
                   fontSize: 10,
                 }}
+                min={yMin}
+                max={yMax}
                 numberOfTicks={ 6 }
                 style={{ marginBottom: xAxisHeight }}
                 contentInset={verticalContentInset}
@@ -303,7 +375,8 @@ class ExplorePageGraph extends React.Component {
 const mapStateToProps = state => {
   return {
     domain: state.graphPeriod.changePeriod,
-    currencyPair: state.currencyOption.currency
+    currencyPair: state.currencyOption.currency,
+    currentCoin: state.fullPage.currentCoin,
   }
 }
 

@@ -7,7 +7,7 @@ export default class GraphsPage extends React.Component {
     this.state = {
     }
   }
-
+//https://medium.com/the-react-native-log/animated-charts-in-react-native-using-d3-and-art-21cd9ccf6c58
   render() {
     return (
       <View style={styles.container}>

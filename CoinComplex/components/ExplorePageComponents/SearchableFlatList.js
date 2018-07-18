@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { FlatList } from "react-native";
+import {FlatList, VirtualizedList} from 'react-native';
+import {OptimizedFlatList} from 'react-native-optimized-flatlist';
 import PropTypes from "prop-types";
 
 export default class SearchableFlatlist extends Component {
@@ -18,7 +19,7 @@ export default class SearchableFlatlist extends Component {
 
 
   render() {
-    return <FlatList {...this.props} data={this.getFilteredResults()} />;
+    return <VirtualizedList {...this.props} data={this.getFilteredResults()} />;
   }
 }
 

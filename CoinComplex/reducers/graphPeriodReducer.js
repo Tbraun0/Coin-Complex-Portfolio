@@ -1,6 +1,6 @@
 /*****************************************************
 (c) 2018 Coin Complex
-Redux Reducers for Lists
+Redux Reducers for GraphPeriod
 ******************************************************/
 
 import * as Actions from '../actions/actionTypes';

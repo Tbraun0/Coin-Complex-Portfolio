@@ -33,25 +33,25 @@ export default class ExplorePageGraphPeriodSwitch extends React.Component {
       var AllButton = <RaisedTextButton onPress={() => this.setDomain('ALL')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='ALL'/>;
       switch(this.state.domain) {
         case '1H':
-          HourButton = <RaisedTextButton disabled={true} disabledColor='rgba(255,255,255,0.7)' onPress={() => this.setDomain('1H')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1H'/>;
+          HourButton = <RaisedTextButton disabled={true} disabledTitleColor='#000000' disabledColor='rgba(48,161,173,0.9)' onPress={() => this.setDomain('1H')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1H'/>;
           break;
         case '1D':
-          DayButton = <RaisedTextButton disabled={true} disabledColor='rgba(255,255,255,0.7)' onPress={() => this.setDomain('1D')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1D'/>;
+          DayButton = <RaisedTextButton disabled={true} disabledTitleColor='#000000' disabledColor='rgba(48,161,173,0.9)' onPress={() => this.setDomain('1D')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1D'/>;
           break;
         case '7D':
-          SevenDayButton = <RaisedTextButton disabled={true} disabledColor='rgba(255,255,255,0.7)' onPress={() => this.setDomain('7D')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='7D'/>;
+          SevenDayButton = <RaisedTextButton disabled={true} disabledTitleColor='#000000' disabledColor='rgba(48,161,173,0.9)' onPress={() => this.setDomain('7D')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='7D'/>;
           break;
         case '1M':
-          MonthButton = <RaisedTextButton disabled={true} disabledColor='rgba(255,255,255,0.7)' onPress={() => this.setDomain('1M')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1M'/>;
+          MonthButton = <RaisedTextButton disabled={true} disabledTitleColor='#000000' disabledColor='rgba(48,161,173,0.9)' onPress={() => this.setDomain('1M')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1M'/>;
           break;
         case '6M':
-          SixMonthButton = <RaisedTextButton disabled={true} disabledColor='rgba(255,255,255,0.7)' onPress={() => this.setDomain('6M')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='6M'/>;
+          SixMonthButton = <RaisedTextButton disabled={true} disabledTitleColor='#000000' disabledColor='rgba(48,161,173,0.9)' onPress={() => this.setDomain('6M')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='6M'/>;
           break;
         case '1Y':
-          YearButton = <RaisedTextButton disabled={true} disabledColor='rgba(255,255,255,0.7)' onPress={() => this.setDomain('1Y')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1Y'/>;
+          YearButton = <RaisedTextButton disabled={true} disabledTitleColor='#000000' disabledColor='rgba(48,161,173,0.9)' onPress={() => this.setDomain('1Y')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='1Y'/>;
           break;
         case 'ALL':
-          AllButton = <RaisedTextButton disabled={true} disabledColor='rgba(255,255,255,0.7)' onPress={() => this.setDomain('ALL')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='ALL'/>;
+          AllButton = <RaisedTextButton disabled={true} disabledTitleColor='#000000' disabledColor='rgba(48,161,173,0.9)' onPress={() => this.setDomain('ALL')} style={styles.button} titleColor='#e9ebeb' color='#0c0c0c' titleStyle={styles.topbarButtonText} rippleColor='#30a1ad' shadeColor='rgba(0,0,0,0)' title='ALL'/>;
           break;
       }
     return (
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   topbarButtonContainer: {
     width:'100%',
     height:40,
+    marginTop:10,
     padding: 5,
     flexWrap:'wrap',
     justifyContent:'space-between',

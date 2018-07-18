@@ -4,6 +4,7 @@ YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module react
 import UserInputSearch from '../UserInputSearch.js';
 import searchIMG from '../../images/search.png';
 import { addElement, removeElement } from '../../actions/watchlistActions.js';
+import { changeGlobalPercent } from '../../actions/globalPercentChangeActions.js';
 import addButtonIMG from '../../images/addbutton.png';
 import ExplorePageRow from './ExplorePageRow.js';
 import axios from 'axios';
@@ -63,58 +64,67 @@ class ExplorePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responseJSON: {},
+      isMounted: false,
       currencyPair: 'USD',
       changePeriod: '24H',
       Allcoins: [],
       coins: [],
       isFetching: true,
       isFetchingMore: false,
-      fullPageDisplaying: false,
       startingPoint: 0,
-      currentSelectedCoin:null,
     }
   }
+  componentDidMount() {
+    this.setState({isMounted: true});
+  }
 
-  componentDidMount() { 
-    this.fetchNewData();
+  componentWillMount() { 
+    this.fetchNewData(this.state.currencyPair);
+  }
+
+  componentWillUnmount() {
+    this.setState({isMounted: false});
   }
 
   onRefresh = () => {
-    this.setState({ isFetching: true}, () => this.fetchNewData());
+    this.setState({ isFetching: true}, () => this.fetchNewData(this.state.currencyPair));
   }
 
   //Load in all the data at once, it's kinda slow since you can only get one convert value at a time with the API
-  fetchNewData = () => {
-			    axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=25&sort=rank&convert=EUR')
+  fetchNewData = (tradingPair) => {
+    console.log('NewData Fetching');
+			    axios.get('https://api.coinmarketcap.com/v2/ticker/?limit=100&structure=array&convert=' + tradingPair)
 			      .then((res) => {
-			        this.setState({isFetching: false, coins:res.data, startingPoint: 25});
-			      })
+		              if (this.state.isMounted) {
+					         this.setState({canFetchMore: true, isFetching: false, coins:res.data.data, startingPoint: 100, currencyPair: tradingPair});
+		              }
+			      }).catch(() => {
+			      	console.log('Failed');
+			      }) 
   }
 
   fetchMoreData = () => {
   	if (this.state.isFetchingMore) {
-		    axios.get('https://api.coinmarketcap.com/v1/ticker/?start=' + this.state.startingPoint + '&limit=25&convert=EUR')
+		    axios.get('https://api.coinmarketcap.com/v2/ticker/?start=' + (this.state.startingPoint+1) + '&limit=100&structure=array&convert=' + this.state.currencyPair)
 		      .then((res) => {
-		      	var newCoins = this.state.coins.concat(res.data);
-		      	var newstart = this.state.startingPoint+25;
-		        this.setState({isFetchingMore: false,coins:newCoins, startingPoint: newstart});
-		      })  		
+		      	var newCoins = this.state.coins.concat(res.data.data);
+		      	var newstart = this.state.startingPoint+100;
+		            if (this.state.isMounted) {
+				          this.setState({isFetchingMore: false,coins:newCoins, startingPoint: newstart});
+		            }
+		      }).catch(() => {
+		      	console.log('Failed');
+		      }) 		
   	}
   }
 
   onChangeTextPair = (text) => {
-    this.setState({currencyPair: text});
+    console.log("Changed pair to " + text);
+    this.setState({isFetching: true});
+    this.fetchNewData(text);
   }
   onChangeTextPeriod = (text) => {
-    this.setState({changePeriod: text});
-  }
-
-  displayFullPageContent = (coin) => {
-    this.setState({fullPageDisplaying:true, currentSelectedCoin: coin});
-  }
-  hideFullPageContent = () => {
-    this.setState({fullPageDisplaying:false});
+    store.dispatch(changeGlobalPercent(text));
   }
 
   handleAddElement = (n) => {
@@ -125,9 +135,15 @@ class ExplorePage extends React.Component {
     store.dispatch(removeElement(n));
   }
 
-  handleChangeText = (text) => {
-    this.setState({searchTerm: text});
-  }
+  getItemLayout = (data, index) => (
+  	{length: 50, offset: 50 * index, index}
+  )
+
+  EndReached = () => {
+		          	if (!this.state.isFetching && !this.state.isFetchingMore) {
+		          		this.setState({isFetchingMore: true}, () => {this.fetchMoreData()})
+		          	}
+		          }
 
   render() {
     var spinner;
@@ -150,7 +166,7 @@ class ExplorePage extends React.Component {
 		              baseColor='#e9ebeb'
 		              dropdownPosition={-4}
 		              dropdownOffset={{top:32, left:0}}
-		              value="USD"
+		              value={this.state.currencyPair}
 		              onChangeText={this.onChangeTextPair}
 		              data={currencyOptions}
 		            />
@@ -161,7 +177,7 @@ class ExplorePage extends React.Component {
 		              baseColor='#e9ebeb'
 		              dropdownPosition={-4}
 		              dropdownOffset={{top:32, left:0}}
-		              value="24H"
+		              value={this.state.changePeriod}
 		              onChangeText={this.onChangeTextPeriod}
 		              data={changeOptions}
 		            />
@@ -170,26 +186,22 @@ class ExplorePage extends React.Component {
 		          searchProperty={"name"}
 		          searchProperty1={"symbol"}
 		          searchTerm={this.props.searchTerm}
-		          onEndReachedThreshold={0.5}
-		          onEndReached={() => {
-		          	if (!this.state.isFetching && !this.state.isFetchingMore) {
-		          		this.setState({isFetchingMore: true}, () => {this.fetchMoreData()})
-		          	}}}
+              refreshing={this.state.isFetching}
+              onRefresh={() => this.onRefresh()}
+              getItem={(data, index) => { return data[index]}}
+              getItemCount={(data) => data.length}
 		          data={this.state.coins}
-		          showsVerticalScrollIndicator={true}
 		          removeClippedSubviews={true}
-		          keyExtractor={(item, index) => item.id}
-		          renderItem={({item}) => (<ExplorePageRow displayFullPageContent={(coin) => {this.displayFullPageContent(coin)}} coin={item} id={item.id} currencyPair={this.state.currencyPair} changePeriod={this.state.changePeriod}/> )}
-		          ListFooterComponent={() => {
-		          		return (
-		                   this.state.isFetchingMore &&
-			              <View style={{ flex: 1, padding: 10 }}>
-			                <ActivityIndicator size="small" />
-			              </View>
-		          		);
-		          }}
+		          getItemLayout={this.getItemLayout}
+		          keyExtractor={(item, index) => item.id.toString()}
+		          renderItem={({item}) => (<ExplorePageRow displayFullPageContent={(coin) => {this.displayFullPageContent(coin)}} 
+								                coin={item} id={item.id} 
+                                currencyPair={this.state.currencyPair} 
+								                changePeriod={this.state.changePeriod}
+								                changeSearchableMounted={(changeTo) => this.props.changeSearchableMounted(changeTo)}/> )}
 		          />
-		          <ExplorePageContentSwitch style={styles.topContent} currentSelectedCoin={this.state.currentSelectedCoin} isDisplayed={this.state.fullPageDisplaying} hideFullPageContent={this.hideFullPageContent}/>
+		          <ExplorePageContentSwitch style={styles.topContent} 
+                changeSearchableMounted={(changeTo) => this.props.changeSearchableMounted(changeTo)}/>
 		      </View>
 	      );
   		}
@@ -213,8 +225,6 @@ const styles = StyleSheet.create({
     opacity:0.7,
   },
   spinnerStyle: {
-    position:'absolute',
-    top:100,
   },
   container: {
     flex: 1,
@@ -224,8 +234,6 @@ const styles = StyleSheet.create({
   spinnerContainer: {
     flex: 1,
     justifyContent: 'center',
-    display:'flex',
-    flexDirection:'column',
     alignItems:'center',
     backgroundColor: '#0c0c0c',
   },

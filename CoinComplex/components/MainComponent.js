@@ -20,11 +20,11 @@ export default class MainComponent extends React.Component {
   }
 
   onPressMenu = () => {
-    this.props.navigation.navigate('DrawerOpen')
+    this.props.navigation.navigate('DrawerOpen');
   }
   
   onPressBack = () => {
-    this.props.navigation.goBack()
+    this.props.navigation.goBack();
   }
 
   handleSearchTextChange = (newText) => {
@@ -63,7 +63,7 @@ export default class MainComponent extends React.Component {
     return (
       <View style={styles.outer}>
           <View style={styles.topbar}>
-            <SvgUri width="45" height="45" style={{marginLeft: 10}} source={require('../images/logo.svg')}/>
+            <SvgUri width="40" height="40" style={{marginLeft: 10}} source={require('../images/logo.svg')}/>
               <View style={styles.searchBarDisplay}>
                 {searchBar}
               </View>
@@ -97,8 +97,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   hamburgerStyle: {
-    width: 35,
-    height:35,
+    width: 27,
+    height:27,
   },
   accountButtonStyle: {
     fontFamily: 'avenirlight',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   topbar: {
     backgroundColor: '#0c0c0c',
     width:'100%',
-    height:60,
+    height:50,
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-between',
@@ -124,9 +124,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#282b2d',
     elevation: 2,
-    height:60,
+    height:50,
     width:'100%',
-    paddingVertical: 10,
+    paddingVertical: 7,
     paddingHorizontal: 15,
   },
   searchBarContainerInner: {
@@ -135,19 +135,18 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     alignItems:'center',
     justifyContent: 'center',
-    height:60,
+    height:50,
     flex: 1,
     padding:3,
     paddingHorizontal: 10,
   },
   sSearchBar: {
     paddingHorizontal: 10,
-    paddingBottom:6,
     flex: 1,
     display:'flex',
     alignItems:'center',
-    fontSize: 16,
-    height:35,
+    fontSize: 14,
+    height:40,
     color: '#e9ebeb',
   },
   menuAccount: {

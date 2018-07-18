@@ -7,9 +7,7 @@ import * as actions from './actionTypes';
 
 export const addElement = (n) => {
 	return { type: actions.ADD, 
-			watchListItem: {
 				name: n,
-		} 
 	};
 }
 

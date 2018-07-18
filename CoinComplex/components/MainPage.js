@@ -9,7 +9,8 @@ import Settings from './Settings.js';
 import Notifications from './Notifications.js';
 import News from './News.js';
 import Account from './Account.js';
-
+import store from '../store';
+import { updateSearch } from '../actions/searchActions.js';
 
 //Nav bar Images
 import ExploreIMG from '../images/explore.png';
@@ -27,12 +28,20 @@ export default class MainPage extends React.Component {
   componentWillReceiveProps(nextprops) {
   	this.setState({currentlySelected: nextprops.currentlySelected});
   }
+  shouldComponentUpdate(nextProps) {
+    if (this.state.currentlySelected === nextProps.currentlySelected) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
   render() {
     var PortfolioButtonUnderLine;
     var WatchListButtonUnderLine;
     var GraphsButtonUnderLine;
     var ExploreButtonUnderLine;
-
+    console.log('Rerendered MainPage');
     var ButtonSelected;
     //This is really ugly but I don't want to rewrite the button components atm
     switch(this.state.currentlySelected) {
@@ -84,7 +93,7 @@ export default class MainPage extends React.Component {
         MainPageContent = <GraphsPage/>
         break;
       case 'Explore':
-        MainPageContent = <ExplorePage/>
+        MainPageContent = <ExplorePage changeSearchableMounted={(changeTo) => this.props.changeSearchableMounted(changeTo)}/>
         break;
       case 'Notifications':
         MainPageContent = <Notifications/>
@@ -110,6 +119,7 @@ export default class MainPage extends React.Component {
             currentlySelected={this.state.currentlySelected}
             onPress={() => {this.props.switchSelect('Portfolio');
                             this.props.changeSearchableMounted(false);
+                            store.dispatch(updateSearch(''));
                       }
                     }/>
           <NavBarButton title="Watchlist"
@@ -118,6 +128,7 @@ export default class MainPage extends React.Component {
             currentlySelected={this.state.currentlySelected}
             onPress={() => {this.props.switchSelect('Watchlist');
                             this.props.changeSearchableMounted(true);
+                            store.dispatch(updateSearch(''));
                       }
                     }/>
           <NavBarButton title="Graphs"
@@ -126,6 +137,8 @@ export default class MainPage extends React.Component {
             currentlySelected={this.state.currentlySelected}
             onPress={() => {this.props.switchSelect('Graphs');
                             this.props.changeSearchableMounted(false);
+                            store.dispatch(updateSearch(''));
+
                       }
                     }/>
           <NavBarButton title="Explore"
@@ -134,6 +147,7 @@ export default class MainPage extends React.Component {
             currentlySelected={this.state.currentlySelected}
             onPress={() => {this.props.switchSelect('Explore');
                             this.props.changeSearchableMounted(true);
+                            store.dispatch(updateSearch(''));
                         }
                     }/>
         </View>
@@ -154,23 +168,16 @@ const styles = StyleSheet.create({
   },
   NavBar: {
     width:'100%',
-    height:60,
+    height:50,
     display:'flex',
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: '#282b2d',
+    borderBottomColor: '#0c0c0c',
     borderTopWidth: 1,
     borderTopColor: '#282b2d',
     bottom:0,
     elevation: 2
-  },
-  text: {
-    fontFamily: 'avenirlight',
-    margin:'auto',
-    fontSize: 20,
-    letterSpacing:2,
-    color: '#e9ebeb',
   },
 });

@@ -5,7 +5,7 @@ import WatchList from './WatchList.js';
 
 //redux store
 import store from '../../store.js';
-store.dispatch(watchListActions.addElement({name: 'BTC'}));
+store.dispatch(watchListActions.addElement('BTC'));
 //store.dispatch(addElement('ETH'));
 
 export default class WatchListPage extends React.Component {
@@ -26,7 +26,7 @@ export default class WatchListPage extends React.Component {
   render() {
     return (
       <View style={styles.WatchListPage}>
-        <WatchList listItems={store.getState()} style={styles.listStyle}/>
+        <WatchList style={styles.listStyle}/>
       </View>
     );
   }

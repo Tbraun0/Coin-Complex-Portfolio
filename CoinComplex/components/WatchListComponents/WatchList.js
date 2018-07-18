@@ -29,8 +29,9 @@ class WatchList extends React.Component {
     };
 
   renderRow = (listItem) => {
+    console.log(listItem);
     return ( 
-      <WatchListRow listItem={listItem} />
+      <WatchListRow listItem={listItem} key={listItem} />
     )
   }
 /*
@@ -55,14 +56,15 @@ class WatchList extends React.Component {
   }
 
   render() {
+    console.log(Array.from(this.state.dataSource));
     return (
       <View style={styles.WatchListPage}>
         <FlatList
-          data={this.state.dataSource}
+          data={Array.from(this.state.dataSource)}
           refreshing={this.state.refreshing}
           onRefresh={() => this.dataRefresh()}
           renderItem={(item) => this.renderRow(item)}
-          keyExtractor={item => item.name}/>
+          keyExtractor={item => item.index}/>
       </View>
     );
   }

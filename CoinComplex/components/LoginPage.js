@@ -34,7 +34,7 @@ export default class LoginPage extends React.Component {
         />
         <View style={styles.loginpageFull}>
           <View style={styles.loginPageFlex}>
-            <SvgUri width="100" height="100" source={require('../images/logo.svg')}  style={{marginBottom: 20, marginLeft: 'auto', marginRight:'auto'}}/>
+            <SvgUri width="125" height="125" source={require('../images/logo.svg')}  style={{marginBottom: 20, marginLeft: 'auto', marginRight:'auto'}}/>
             <UserInput
               source={usernameIMG}
               placeholder="Username"

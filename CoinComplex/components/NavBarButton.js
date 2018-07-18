@@ -145,7 +145,7 @@ class NavBarButton extends React.Component<{
         testID={testID}
         disabled={disabled}
         onPress={onPress}
-        style={{opacity: componentOpacity, flexDirection: 'row',justifyContent: 'space-between', borderTopWidth: 1,borderTopColor:componentTopBorder, borderBottomWidth: 1,borderBottomColor:componentTopBorder, paddingTop: 10}}
+        style={{opacity: componentOpacity, flexDirection: 'row',justifyContent: 'space-between', borderTopWidth: 1,borderTopColor:componentTopBorder, borderBottomWidth: 1,borderBottomColor:componentTopBorder}}
         onHideUnderlay={this._onHideUnderlay.bind(this)}
         onShowUnderlay={this._onShowUnderlay.bind(this)}
         >
@@ -174,8 +174,9 @@ const styles = StyleSheet.create({
     justifyContent:'center',
   },
   ImageStyle: {
-    width:20,
-    height:20,
+    marginTop:6,
+    width:17,
+    height:17,
   },
   button: Platform.select({
     ios: {},
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
       fontFamily: 'avenirlight',
       padding: 8,
       letterSpacing:2,
-      fontSize: 12,
+      fontSize: 10,
       display:'flex',
       alignItems: 'center',
     },
@@ -208,7 +209,7 @@ const styles = StyleSheet.create({
       color: '#30a1ad',
       textAlign: 'center',
       padding: 8,
-      fontSize:12,
+      fontSize:10,
       fontFamily: 'avenirlight',
       letterSpacing:2,
       display:'flex',
@@ -229,14 +230,14 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       padding: 8,
       letterSpacing:2,
-      fontSize: 12,
+      fontSize: 10,
     },
     android: {
       color:'#30a1ad',
       fontFamily: 'avenirlight',
       padding: 8,
       textAlign: 'center',
-      fontSize:12,
+      fontSize:10,
       letterSpacing:2,
     },
   }),

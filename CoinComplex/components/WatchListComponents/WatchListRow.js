@@ -23,11 +23,12 @@ export default class WatchListRow extends React.Component {
   }
 
   renderRow = (listItem) => {
-    var itemName = listItem.item.name;
+    var itemName = listItem.item;
+    console.log(itemName);
     return ( 
       <View style={styles.row}>
           <Text style={styles.text}> {itemName} </Text>
-          <TouchableOpacity onPress={() => this.handleRemoveElement({name: itemName})}>
+          <TouchableOpacity onPress={() => this.handleRemoveElement(itemName)}>
             <Image source={removeButtonIMG} style={styles.inlineImg}/>
           </TouchableOpacity>
       </View>
@@ -40,10 +41,7 @@ export default class WatchListRow extends React.Component {
     _onShowUnderlay() {
       this.setState({ pressStatus: true});
     }
-    handlePress = () => {
-      console.log('Pressed');
-    }
-
+    
   render() {
     let watchRow;
     this.state.rendered ? watchRow = <TouchableHighlight style={styles.rowWrap} activeOpacity={.5} onPress={this.handlePress} underlayColor='#30a1ad'>{this.renderRow(this.props.listItem)}</TouchableHighlight> : watchRow = <View></View>;

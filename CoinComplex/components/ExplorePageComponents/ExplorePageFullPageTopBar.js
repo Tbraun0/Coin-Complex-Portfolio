@@ -4,6 +4,7 @@ import { TextButton, RaisedTextButton } from 'react-native-material-buttons';
 import { Dropdown } from 'react-native-material-dropdown';
 import { updateCurrency } from '../../actions/currencyOptionActions.js';
 import axios from 'axios';
+import { toggleFullPage } from '../../actions/fullPageGraphActions.js';
 import { connect } from 'react-redux';
 import Back_Arrow from '../../images/Back_Arrow.png';
 
@@ -22,7 +23,7 @@ class ExplorePageFullPageTopBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({currentCoin: nextProps.currentCoin, currencyPair: nextProps.currencyPair}, this.getLatestPrice());
+    this.setState({currentCoin: nextProps.currentCoin, currencyPair: nextProps.currencyPair},() => this.getLatestPrice());
   }
 
   onChangeTextPair = (text) => {
@@ -45,6 +46,7 @@ class ExplorePageFullPageTopBar extends React.Component {
     }, {
       value: 'EUR',
     }];
+    console.log(this.state.currentCoin);
     if (this.state.currentCoin.symbol != 'BTC') {
       compareOptions.push({value: 'BTC'});
     }
@@ -52,12 +54,13 @@ class ExplorePageFullPageTopBar extends React.Component {
       compareOptions.push({value: 'ETH'});
     }
     return (
-      <View style={{height:75, width:'100%'}}>
+      <View style={{height:90, width:'100%'}}>
         <View style={styles.topbarInfoContainer}>
           <View style={styles.topbarNameContainer}>
             <TouchableOpacity style={styles.touchableBackContainer} 
               onPress={() => {
-                this.props.hidePageContent();
+                store.dispatch(toggleFullPage(false, this.state.currentCoin));
+                this.props.changeSearchableMounted(true);
               }}>
               <Image source={Back_Arrow} style={styles.backImage}/>
             </TouchableOpacity>
@@ -71,7 +74,7 @@ class ExplorePageFullPageTopBar extends React.Component {
             baseColor='#e9ebeb'
             dropdownPosition={-4}
             dropdownOffset={{top:32, left:0}}
-            value="USD"
+            value={this.state.currencyPair}
             onChangeText={this.onChangeTextPair}
             data={compareOptions}/>    
             </View>
@@ -85,7 +88,8 @@ class ExplorePageFullPageTopBar extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currencyPair: state.currencyOption.currency
+    currencyPair: state.currencyOption.currency,
+    currentCoin: state.fullPage.currentCoin,
   }
 }
 export default connect (mapStateToProps)(ExplorePageFullPageTopBar)
@@ -111,6 +115,7 @@ const styles = StyleSheet.create({
   topbarInfoContainer: {
     width:'100%',
     height:45,
+    marginTop:5,
     display:'flex',
     flexDirection:'row',
     alignItems:'center',
@@ -118,7 +123,7 @@ const styles = StyleSheet.create({
   },
   topbarPriceContainer: {
     width:'100%',
-    height:30,
+    height:40,
     display:'flex',
     flexDirection: 'column',
     justifyContent:'center',
